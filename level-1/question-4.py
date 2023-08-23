@@ -2,6 +2,9 @@ class GenerateListTuple:
     def __init__(self, user_input: str):
         self.user_input = user_input
 
+    def sanitise_user_string(self):
+        return self.user_input.replace(" ", "")
+
     def validate_user_input(self, user_string: str) -> None:
         if type(self.user_input) != str:
             raise TypeError('Input must be a string')
@@ -11,9 +14,6 @@ class GenerateListTuple:
         for input in split_user_input:
             if not input.isnumeric():
                 raise TypeError('Your string must contain a sequence of comma separated numbers')
-
-    def sanitise_user_string(self):
-        return self.user_input.replace(" ", "")
 
     @staticmethod
     def generate_list(sanitised_user_string: str) -> list[str]:
