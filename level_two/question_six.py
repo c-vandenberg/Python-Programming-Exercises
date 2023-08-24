@@ -1,5 +1,6 @@
 #!/usr/bin/env python3
 
+from helpers import string_helpers
 import math
 
 
@@ -8,23 +9,13 @@ class SquareRootFormula:
 
     CONSTANT_H = 30
 
+    def __init__(self, string_list_helper: string_helpers.StringListHelper):
+        self.string_list_helper = string_list_helper
+
     def _get_user_variables(self) -> list[str]:
         user_input: str = input('Please enter a comma separated sequence of numbers:')
-        sanitised_user_string: str = user_input.replace(" ", "")
-        self.validate_user_input(sanitised_user_string)
 
-        return sanitised_user_string.split(',')
-
-    @staticmethod
-    def validate_user_input(user_string: str) -> None:
-        if type(user_string) != str:
-            raise TypeError('Input must be a string')
-
-        split_user_input: list[str] = user_string.split(',')
-
-        for input in split_user_input:
-            if not input.isnumeric():
-                raise TypeError('Your string must contain a sequence of comma separated numbers')
+        return self.string_list_helper.get_validated_string_list(user_input, ',')
 
     def calculate_formula(self):
         variable_d_values: list[str] = self._get_user_variables()
@@ -38,5 +29,6 @@ class SquareRootFormula:
         return ",".join(result_list)
 
 
-square_root_formula: SquareRootFormula = SquareRootFormula()
+string_list_helper_obj: string_helpers.StringListHelper() = string_helpers.StringListHelper()
+square_root_formula: SquareRootFormula = SquareRootFormula(string_list_helper_obj)
 print(square_root_formula.calculate_formula())
