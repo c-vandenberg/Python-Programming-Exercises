@@ -1,3 +1,5 @@
+#!/usr/bin/env python3
+
 class DivisibleByNotMultipleOf:
     def __init__(self, divisible_by: int, not_multiple_of: int):
         self.divisible_by = divisible_by

@@ -1,3 +1,5 @@
+#!/usr/bin/env python3
+
 class IntegerFactorial:
 
     def __init__(self, integer_list: list[int]):

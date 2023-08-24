@@ -1,3 +1,5 @@
+#!/usr/bin/env python3
+
 class OneToNSquareDict:
     square_dict: dict[int, int] = {}
 

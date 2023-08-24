@@ -1,3 +1,5 @@
+#!/usr/bin/env python3
+
 class GenerateListTuple:
     def __init__(self, user_input: str):
         self.user_input = user_input
