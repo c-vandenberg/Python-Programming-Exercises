@@ -9,13 +9,13 @@ class SquareRootFormula:
 
     CONSTANT_H = 30
 
-    def __init__(self, string_list_helper: string_helpers.StringListHelper):
-        self.string_list_helper = string_list_helper
+    def __init__(self, numeric_string_list_helper: string_helpers.NumericStringListHelper):
+        self.numeric_string_list_helper = numeric_string_list_helper
 
     def _get_user_variables(self) -> list[str]:
         user_input: str = input('Please enter a comma separated sequence of numbers:')
 
-        return self.string_list_helper.get_validated_string_list(user_input, ',')
+        return self.numeric_string_list_helper.get_validated_numeric_string_list(user_input, ',')
 
     def calculate_formula(self):
         variable_d_values: list[str] = self._get_user_variables()
@@ -29,6 +29,6 @@ class SquareRootFormula:
         return ",".join(result_list)
 
 
-string_list_helper_obj: string_helpers.StringListHelper() = string_helpers.StringListHelper()
-square_root_formula: SquareRootFormula = SquareRootFormula(string_list_helper_obj)
+numeric_string_list_helper_obj: string_helpers.NumericStringListHelper = string_helpers.NumericStringListHelper()
+square_root_formula: SquareRootFormula = SquareRootFormula(numeric_string_list_helper_obj)
 print(square_root_formula.calculate_formula())
