@@ -10,7 +10,10 @@ class TwoDimensionalArray:
 
     def _get_user_input(self) -> list[str]:
         user_input: str = input('Please enter a comma separated sequence of two numbers:')
-        user_input_list: list[str] = self.numeric_string_list_helper.get_validated_numeric_string_list(user_input, ',')
+        user_input_list: list[str] = self.numeric_string_list_helper.get_validated_numeric_string_list(
+            user_input,
+            ','
+        )
 
         if len(user_input_list) != 2:
             raise exception_helpers.DataStructureSizeError(2, len(user_input_list))
