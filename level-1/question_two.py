@@ -3,16 +3,16 @@ class IntegerFactorial:
     def __init__(self, integer_list: list[int]):
         self.integer_list = integer_list
 
-    def factorial(self, integer: int) -> int:
+    def _factorial(self, integer: int) -> int:
         if (integer == 0) or (integer == 1):
             return 1
 
-        return integer * self.factorial(integer - 1)
+        return integer * self._factorial(integer - 1)
 
     def calculate_factorial(self) -> dict[int, int]:
         factorial_list: dict[int, int] = {}
         for number in self.integer_list:
-            factorial_list[number] = self.factorial(number)
+            factorial_list[number] = self._factorial(number)
         return factorial_list
 
 
