@@ -13,7 +13,3 @@ class OneToNSquareDict:
 
         self.square_dict[integral] = integral * integral
         return self.calculate(integral - 1, recursion_depth + 1)
-
-
-one_to_n_square_dict: OneToNSquareDict = OneToNSquareDict()
-print(one_to_n_square_dict.calculate(8))

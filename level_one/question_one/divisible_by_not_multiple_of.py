@@ -11,7 +11,3 @@ class DivisibleByNotMultipleOf:
             if (integer % self.divisible_by == 0) and (integer % self.not_multiple_of != 0):
                 integer_list.append(integer)
         return integer_list
-
-
-divisible_not_multiple_of = DivisibleByNotMultipleOf(7, 5)
-print(divisible_not_multiple_of.list_integers_in_range(2000, 3200))

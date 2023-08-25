@@ -1,18 +1,24 @@
 #!/usr/bin/env python3
 
-class StringListHelper:
+from abc import ABC
 
-    def get_validated_string_list(self, unvalidated_string: str, character_to_split_string: str) -> list[str]:
-        if type(unvalidated_string) != str:
-            raise TypeError('Input must be a string')
 
-        if character_to_split_string not in unvalidated_string:
+class StringListHelper(ABC):
+    def get_validated_string_list(self, pre_split_string: str, character_to_split_string: str) -> list[str]:
+        self.validate_string(pre_split_string)
+
+        if character_to_split_string not in pre_split_string:
             raise ValueError(f'Input must contain {character_to_split_string}')
 
-        sanitised_string: str = self._sanitise_string_whitespace(unvalidated_string)
+        sanitised_string: str = self._sanitise_string_whitespace(pre_split_string)
         split_sanitised_string: list[str] = sanitised_string.split(character_to_split_string)
 
         return split_sanitised_string
+
+    @staticmethod
+    def validate_string(unvalidated_string: str):
+        if type(unvalidated_string) != str:
+            raise TypeError('Input must be a string')
 
     @staticmethod
     def _sanitise_string_whitespace(unsanitised_string: str) -> str:
