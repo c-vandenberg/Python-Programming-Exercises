@@ -7,7 +7,7 @@ class StringListHelper(ABC):
     def get_validated_string_list(self, pre_split_string: str, character_to_split_string: str) -> list[str]:
         self.validate_string(pre_split_string)
 
-        if character_to_split_string not in pre_split_string:
+        if (character_to_split_string != ' ') and (character_to_split_string not in pre_split_string):
             raise ValueError(f'Input must contain {character_to_split_string}')
 
         return pre_split_string.split(character_to_split_string)
