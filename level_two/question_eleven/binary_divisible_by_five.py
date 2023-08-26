@@ -7,7 +7,7 @@ class BinaryDivisibleByFive:
     def __init__(self, binary_string_list_helper: BinaryStringListHelper):
         self.binary_string_list_helper = binary_string_list_helper
 
-    def _get_user_input(self):
+    def _get_user_input(self) -> list[str]:
         user_input = input('Please enter a comma separated sequence of binary strings: ')
         sanitised_user_input: str = self.binary_string_list_helper.sanitise_string_whitespace(user_input)
 
@@ -23,7 +23,7 @@ class BinaryDivisibleByFive:
 
         return True
 
-    def execute(self):
+    def execute(self) -> str:
         binary_string_list: list[str] = self._get_user_input()
         divisible_by_five_string_list: list[str] = []
         separator = ','
