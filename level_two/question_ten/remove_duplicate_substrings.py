@@ -10,9 +10,11 @@ class RemoveDuplicateSubstrings:
     def _get_user_input(self) -> list[str]:
         user_input: str = input('Please enter the text you would like to remove duplicate words from: ')
 
-        return self.string_list_helper.get_validated_string_list(user_input, ' ')
+        return self.string_list_helper.get_validated_string_list(user_input.lower(), ' ')
 
-    def execute(self) -> list[str]:
+    def execute(self) -> str:
         string_list: list[str] = self._get_user_input()
-        string_set = set(string_list)
-        return list(set(string_list))
+        duplicates_removed: list[str] = list(set(string_list))
+        duplicates_removed.sort()
+        separator = ' '
+        return separator.join(sorted(duplicates_removed))
