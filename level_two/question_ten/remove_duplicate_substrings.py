@@ -15,6 +15,5 @@ class RemoveDuplicateSubstrings:
     def execute(self) -> str:
         string_list: list[str] = self._get_user_input()
         duplicates_removed: list[str] = list(set(string_list))
-        duplicates_removed.sort()
         separator = ' '
         return separator.join(sorted(duplicates_removed))
