@@ -8,7 +8,9 @@ class GenerateListTuple:
         self.numeric_string_list_helper = numeric_string_list_helper
 
     def generate_list(self, user_string: str) -> list[str]:
-        return self.numeric_string_list_helper.get_validated_numeric_string_list(user_string, ',')
+        sanitised_user_string: str = self.numeric_string_list_helper.sanitise_string_whitespace(user_string)
+        return self.numeric_string_list_helper.get_validated_numeric_string_list(sanitised_user_string, ',')
 
     def generate_tuple(self, user_string: str) -> tuple[str]:
-        return tuple(self.numeric_string_list_helper.get_validated_numeric_string_list(user_string, ','))
+        sanitised_user_string: str = self.numeric_string_list_helper.sanitise_string_whitespace(user_string)
+        return tuple(self.numeric_string_list_helper.get_validated_numeric_string_list(sanitised_user_string, ','))

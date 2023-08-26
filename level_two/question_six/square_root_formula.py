@@ -14,8 +14,9 @@ class SquareRootFormula:
 
     def _get_user_variables(self) -> list[str]:
         user_input: str = input('Please enter a comma separated sequence of numbers: ')
+        sanitised_user_input: str = self.numeric_string_list_helper.sanitise_string_whitespace(user_input)
 
-        return self.numeric_string_list_helper.get_validated_numeric_string_list(user_input, ',')
+        return self.numeric_string_list_helper.get_validated_numeric_string_list(sanitised_user_input, ',')
 
     def calculate_formula(self):
         variable_d_values: list[str] = self._get_user_variables()

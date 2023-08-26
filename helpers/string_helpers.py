@@ -10,10 +10,7 @@ class StringListHelper(ABC):
         if character_to_split_string not in pre_split_string:
             raise ValueError(f'Input must contain {character_to_split_string}')
 
-        sanitised_string: str = self._sanitise_string_whitespace(pre_split_string)
-        split_sanitised_string: list[str] = sanitised_string.split(character_to_split_string)
-
-        return split_sanitised_string
+        return pre_split_string.split(character_to_split_string)
 
     @staticmethod
     def validate_string(unvalidated_string: str):
@@ -21,7 +18,7 @@ class StringListHelper(ABC):
             raise TypeError('Input must be a string')
 
     @staticmethod
-    def _sanitise_string_whitespace(unsanitised_string: str) -> str:
+    def sanitise_string_whitespace(unsanitised_string: str) -> str:
         return unsanitised_string.replace(" ", "")
 
 

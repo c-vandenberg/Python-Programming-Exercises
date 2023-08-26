@@ -9,8 +9,9 @@ class AlphabetiseStringSequence:
 
     def _get_user_input(self) -> list[str]:
         user_input: str = input('Please enter a comma separated sequence of alphabetical strings: ')
+        sanitised_user_input: str = self.alphabetic_string_list_helper.sanitise_string_whitespace(user_input)
         user_input_list: list[str] = self.alphabetic_string_list_helper.get_validated_alphabetic_string_list(
-            user_input,
+            sanitised_user_input,
             ','
         )
 

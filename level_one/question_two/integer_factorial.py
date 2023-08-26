@@ -9,7 +9,8 @@ class IntegerFactorial:
 
     def get_integer_list(self) -> list[int]:
         user_input: str = input('PLease enter a comma separated numerical string: ')
-        validated_user_string_list = self.numerical_string_list_helper.get_validated_string_list(user_input, ',')
+        sanitised_user_input: str = self.numerical_string_list_helper.sanitise_string_whitespace(user_input)
+        validated_user_string_list = self.numerical_string_list_helper.get_validated_string_list(sanitised_user_input, ',')
         integer_list: list[int] = []
 
         for validated_string in validated_user_string_list:
