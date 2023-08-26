@@ -3,7 +3,7 @@
 from helpers.string_helpers import StringListHelper
 
 
-class CalculateLettersDigitsNumbers:
+class CalculateUpperLowerCaseNumbers:
     def __init__(self, string_list_helper: StringListHelper):
         self.string_list_helper = string_list_helper
 
@@ -17,15 +17,15 @@ class CalculateLettersDigitsNumbers:
 
     def calculate(self):
         user_input: list[str] = self._get_user_input()
-        letter_digit_numbers: dict[str][int] = {'LETTERS': 0, 'DIGITS': 0}
+        upper_lower_case_numbers: dict[str][int] = {'UPPER CASE': 0, 'LOWER CASE': 0}
 
         for substring in user_input:
             for character in substring:
-                if character.isalpha():
-                    letter_digit_numbers['LETTERS'] += 1
-                elif character.isnumeric():
-                    letter_digit_numbers['DIGITS'] += 1
+                if character.isupper():
+                    upper_lower_case_numbers['UPPER CASE'] += 1
+                elif character.islower():
+                    upper_lower_case_numbers['LOWER CASE'] += 1
                 else:
                     continue
 
-        print(f"LETTERS: {letter_digit_numbers['LETTERS']}\nNUMBERS: {letter_digit_numbers['DIGITS']}")
+        print(f"LETTERS: {upper_lower_case_numbers['UPPER CASE']}\nNUMBERS: {upper_lower_case_numbers['LOWER CASE']}")
