@@ -49,3 +49,24 @@ class AlphabeticStringListHelper(StringListHelper):
 
         return validated_string_list
 
+
+class BinaryStringListHelper(StringListHelper):
+    def get_validated_binary_string_list(self, unvalidated_string: str, character_to_split_string: str):
+        validated_string_list: list[str] = super().get_validated_string_list(
+            unvalidated_string,
+            character_to_split_string
+        )
+
+        for sub_string in validated_string_list:
+            if not self._is_binary(sub_string):
+                raise ValueError('Your string must contain a sequence of binary strings')
+
+        return validated_string_list
+
+    @staticmethod
+    def _is_binary(string_sequence: str) -> bool:
+        for substring in string_sequence:
+            if (substring != '0') and (substring != '1'):
+                return False
+
+        return True
