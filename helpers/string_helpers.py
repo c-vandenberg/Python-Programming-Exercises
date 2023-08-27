@@ -79,3 +79,21 @@ class TransactionLogStringListHelper(StringListHelper):
         pattern = r'([A-Z]\s\d+)'
 
         return re.findall(pattern, unvalidated_string)
+
+
+class PasswordStringListHelper(StringListHelper):
+    def get_validated_password_string_list(self, unvalidated_passwords_string: str,
+                                           character_to_split_string: str) -> list[str]:
+
+        validated_password_string_list: list[str] = self.get_validated_string_list(
+            unvalidated_passwords_string,
+            character_to_split_string
+        )
+        pattern = '^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[$#@]).{6,12}$'
+        accepted_passwords: list[str] = []
+
+        for password in validated_password_string_list:
+            if re.match(pattern, password):
+                accepted_passwords.append(password)
+
+        return accepted_passwords
