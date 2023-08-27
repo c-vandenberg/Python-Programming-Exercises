@@ -1,6 +1,7 @@
 #!/usr/bin/env python3
 
 from abc import ABC
+import re
 
 
 class StringListHelper(ABC):
@@ -70,3 +71,11 @@ class BinaryStringListHelper(StringListHelper):
                 return False
 
         return True
+
+
+class TransactionLogStringListHelper(StringListHelper):
+    def get_validated_transaction_log_string_list(self, unvalidated_string: str) -> list[str]:
+        self.validate_string(unvalidated_string)
+        pattern = r'([A-Z]\s\d+)'
+
+        return re.findall(pattern, unvalidated_string)
