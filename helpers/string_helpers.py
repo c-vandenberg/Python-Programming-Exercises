@@ -135,3 +135,11 @@ class RobotMovementStringDictHelper(StringListHelper):
             movement_commands[movement_match.group('direction')] = float(movement_match.group('steps'))
 
         return movement_commands
+
+
+class SubstringFrequencyStringListHelper(StringListHelper):
+    def get_validated_substring_frequency_string_list(self, unvalidated_substring_frequency_string: str) -> list[str]:
+        self.validate_string(unvalidated_substring_frequency_string)
+        substring_split_pattern: str = r'[\s!"#$%&()*+,-./:;<=>?@\[\\\]^_`{|}~]+'
+
+        return re.split(substring_split_pattern, unvalidated_substring_frequency_string)
