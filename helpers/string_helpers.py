@@ -97,3 +97,16 @@ class PasswordStringListHelper(StringListHelper):
                 accepted_passwords.append(password)
 
         return accepted_passwords
+
+
+class NameAgeHeightStringListHelper(StringListHelper):
+    def get_validated_name_age_height_string_list(self, unvalidated_name_age_height_string: str) -> list[str]:
+        self.validate_string(unvalidated_name_age_height_string)
+        pattern = r'[^, ]+(?:,[^, ]+){2}'
+
+        name_age_height_string_list: list[str] = re.findall(pattern, unvalidated_name_age_height_string)
+
+        if len(name_age_height_string_list) < 1:
+            raise ValueError("The general format must be 'name, age, height name, age, height")
+
+        return name_age_height_string_list
