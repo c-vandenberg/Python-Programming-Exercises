@@ -1,7 +1,8 @@
 #!/usr/bin/env python3
 
-from abc import ABC
 import re
+from abc import ABC
+from typing import Iterator
 
 
 class StringListHelper(ABC):
@@ -76,7 +77,7 @@ class BinaryStringListHelper(StringListHelper):
 class TransactionLogStringListHelper(StringListHelper):
     def get_validated_transaction_log_string_list(self, unvalidated_string: str) -> list[str]:
         self.validate_string(unvalidated_string)
-        pattern = r'([A-Z]\s\d+)'
+        pattern: str = r'([A-Z]\s\d+)'
 
         return re.findall(pattern, unvalidated_string)
 
@@ -89,7 +90,7 @@ class PasswordStringListHelper(StringListHelper):
             unvalidated_passwords_string,
             character_to_split_string
         )
-        pattern = '^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[$#@]).{6,12}$'
+        pattern: str = '^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[$#@]).{6,12}$'
         accepted_passwords: list[str] = []
 
         for password in validated_password_string_list:
@@ -102,7 +103,7 @@ class PasswordStringListHelper(StringListHelper):
 class NameAgeHeightStringListHelper(StringListHelper):
     def get_validated_name_age_height_string_list(self, unvalidated_name_age_height_string: str) -> list[str]:
         self.validate_string(unvalidated_name_age_height_string)
-        pattern = r'[^, ]+(?:,[^, ]+){2}'
+        pattern: str = r'[^, ]+(?:,[^, ]+){2}'
 
         name_age_height_string_list: list[str] = re.findall(pattern, unvalidated_name_age_height_string)
 
@@ -110,3 +111,27 @@ class NameAgeHeightStringListHelper(StringListHelper):
             raise ValueError("The general format must be 'name, age, height name, age, height")
 
         return name_age_height_string_list
+
+
+class RobotMovementStringDictHelper(StringListHelper):
+    def get_validated_robot_movement_string_dict(self, unvalidated_robot_movement_string_list: str) -> dict[str: float]:
+        sanitised_robot_movement_string: str = self.sanitise_string_whitespace(unvalidated_robot_movement_string_list)
+        self.validate_string(sanitised_robot_movement_string)
+        validation_pattern: str = r'^(UP|DOWN|LEFT|RIGHT)\d+(,(UP|DOWN|LEFT|RIGHT)\d+)*$'
+
+        if not re.match(validation_pattern, sanitised_robot_movement_string):
+            raise ValueError(
+                'You must enter a movement string with the general format UP W, DOWN X, LEFT Y, RIGHT Z'
+            )
+
+        movement_command_group_pattern: str = r'(?P<direction>UP|DOWN|LEFT|RIGHT)(?P<steps>\d+)'
+        movement_commands: dict[str: float] = {}
+        movement_matches: Iterator[re.Match[str]] = re.finditer(
+            movement_command_group_pattern,
+            sanitised_robot_movement_string
+        )
+
+        for movement_match in movement_matches:
+            movement_commands[movement_match.group('direction')] = float(movement_match.group('steps'))
+
+        return movement_commands
