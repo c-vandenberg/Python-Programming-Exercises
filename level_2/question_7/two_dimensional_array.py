@@ -6,12 +6,12 @@ from helpers.exception_helpers import DataStructureSizeError
 
 class TwoDimensionalArray:
     def __init__(self, numeric_string_list_helper: NumericStringListHelper):
-        self.numeric_string_list_helper = numeric_string_list_helper
+        self._numeric_string_list_helper = numeric_string_list_helper
 
     def _get_user_input(self) -> list[str]:
         user_input: str = input('Please enter a comma separated sequence of two integers: ')
-        sanitised_user_input: str = self.numeric_string_list_helper.sanitise_string_whitespace(user_input)
-        user_input_list: list[str] = self.numeric_string_list_helper.get_validated_numeric_string_list(
+        sanitised_user_input: str = self._numeric_string_list_helper.sanitise_string_whitespace(user_input)
+        user_input_list: list[str] = self._numeric_string_list_helper.get_validated_numeric_string_list(
             sanitised_user_input,
             ','
         )

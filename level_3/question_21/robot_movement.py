@@ -11,7 +11,7 @@ class RobotMovement:
             x_coordinate: float,
             y_coordinate: float,
     ):
-        self.robot_movement_string_dict_helper = robot_movement_string_dict_helper
+        self._robot_movement_string_dict_helper = robot_movement_string_dict_helper
         self._x_coordinate = x_coordinate
         self._y_coordinate = y_coordinate
 
@@ -20,7 +20,7 @@ class RobotMovement:
             'Please enter a movement string with the general format UP W, DOWN X, LEFT Y, RIGHT Z: '
         )
 
-        return self.robot_movement_string_dict_helper.get_validated_robot_movement_string_dict(user_input)
+        return self._robot_movement_string_dict_helper.get_validated_robot_movement_string_dict(user_input)
 
     def execute(self) -> float:
         robot_movement_input = self._get_user_input()

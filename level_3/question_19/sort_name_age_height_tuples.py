@@ -6,14 +6,14 @@ from helpers.string_helpers import NameAgeHeightStringListHelper
 
 class SortNameAgeHeightTuples:
     def __init__(self, name_age_height_string_list_helper: NameAgeHeightStringListHelper):
-        self.name_age_height_string_list_helper = name_age_height_string_list_helper
+        self._name_age_height_string_list_helper = name_age_height_string_list_helper
 
     def _get_user_input(self) -> list[str]:
         user_input: str = input(
             "Please enter your name, age, height sequence in the general format 'name, age, height name, age, height: "
         )
 
-        return self.name_age_height_string_list_helper.get_validated_name_age_height_string_list(user_input)
+        return self._name_age_height_string_list_helper.get_validated_name_age_height_string_list(user_input)
 
     @staticmethod
     def _sort_age(unsorted_name_dict_entry: dict[str]):

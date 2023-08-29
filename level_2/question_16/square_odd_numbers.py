@@ -6,12 +6,12 @@ import math
 
 class SquareOddNumbers:
     def __init__(self, numeric_string_list_helper: NumericStringListHelper):
-        self.numeric_string_list_helper = numeric_string_list_helper
+        self._numeric_string_list_helper = numeric_string_list_helper
 
     def _get_user_input(self) -> list[str]:
         user_input: str = input('Please enter a comma separated sequence of integers: ')
-        return self.numeric_string_list_helper.get_validated_numeric_string_list(
-            self.numeric_string_list_helper.sanitise_string_whitespace(user_input),
+        return self._numeric_string_list_helper.get_validated_numeric_string_list(
+            self._numeric_string_list_helper.sanitise_string_whitespace(user_input),
             ','
         )
 

@@ -5,13 +5,13 @@ from helpers.string_helpers import BinaryStringListHelper
 
 class BinaryDivisibleByFive:
     def __init__(self, binary_string_list_helper: BinaryStringListHelper):
-        self.binary_string_list_helper = binary_string_list_helper
+        self._binary_string_list_helper = binary_string_list_helper
 
     def _get_user_input(self) -> list[str]:
         user_input = input('Please enter a comma separated sequence of binary strings: ')
-        sanitised_user_input: str = self.binary_string_list_helper.sanitise_string_whitespace(user_input)
+        sanitised_user_input: str = self._binary_string_list_helper.sanitise_string_whitespace(user_input)
 
-        return self.binary_string_list_helper.get_validated_binary_string_list(
+        return self._binary_string_list_helper.get_validated_binary_string_list(
             sanitised_user_input,
             ','
         )

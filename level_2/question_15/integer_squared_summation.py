@@ -7,12 +7,12 @@ import math
 
 class IntegerSquaredSummation:
     def __init__(self, numeric_string_list_helper: NumericStringListHelper, exponent_range: int):
-        self.numeric_string_list_helper = numeric_string_list_helper
-        self.exponent_range = exponent_range
+        self._numeric_string_list_helper = numeric_string_list_helper
+        self._exponent_range = exponent_range
 
     def _get_user_input(self) -> list[str]:
         user_input: str = input('Please enter your single digit: ')
-        validated_user_input: list[str] = self.numeric_string_list_helper.get_validated_numeric_string_list(
+        validated_user_input: list[str] = self._numeric_string_list_helper.get_validated_numeric_string_list(
             user_input,
             ' '
         )
@@ -27,7 +27,7 @@ class IntegerSquaredSummation:
         result = 0
 
         for digit in user_input:
-            for exponent in range(1, self.exponent_range + 1):
+            for exponent in range(1, self._exponent_range + 1):
                 result += math.pow(int(digit), exponent)
 
         return result

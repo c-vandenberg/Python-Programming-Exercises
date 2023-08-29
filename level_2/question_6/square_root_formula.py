@@ -10,13 +10,13 @@ class SquareRootFormula:
     CONSTANT_H = 30
 
     def __init__(self, numeric_string_list_helper: NumericStringListHelper):
-        self.numeric_string_list_helper = numeric_string_list_helper
+        self._numeric_string_list_helper = numeric_string_list_helper
 
     def _get_user_variables(self) -> list[str]:
         user_input: str = input('Please enter a comma separated sequence of numbers: ')
-        sanitised_user_input: str = self.numeric_string_list_helper.sanitise_string_whitespace(user_input)
+        sanitised_user_input: str = self._numeric_string_list_helper.sanitise_string_whitespace(user_input)
 
-        return self.numeric_string_list_helper.get_validated_numeric_string_list(sanitised_user_input, ',')
+        return self._numeric_string_list_helper.get_validated_numeric_string_list(sanitised_user_input, ',')
 
     def calculate_formula(self):
         variable_d_values: list[str] = self._get_user_variables()

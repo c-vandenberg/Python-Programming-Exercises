@@ -33,7 +33,7 @@ class NumericStringListHelper(StringListHelper):
 
         for sub_string in validated_string_list:
             if not sub_string.isnumeric():
-                raise ValueError('Your string must contain a sequence of numeric strings')
+                raise ValueError('Your string must be numeric')
 
         return validated_string_list
 
@@ -47,7 +47,7 @@ class AlphabeticStringListHelper(StringListHelper):
 
         for sub_string in validated_string_list:
             if not sub_string.isalpha():
-                raise ValueError('Your string must contain a sequence of alphabetic strings')
+                raise ValueError('Your string must be alphabetic')
 
         return validated_string_list
 

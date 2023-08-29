@@ -5,11 +5,11 @@ from helpers.string_helpers import AlphabeticStringListHelper
 
 class CapitaliseAlphabeticString:
     def __init__(self, alphabetic_string_list_helper: AlphabeticStringListHelper):
-        self.alphabetic_string_list_helper = alphabetic_string_list_helper
+        self._alphabetic_string_list_helper = alphabetic_string_list_helper
 
     def _get_user_input(self) -> str:
         user_input: str = input('Please enter a alphabetical string: ')
-        self.alphabetic_string_list_helper.validate_string(user_input)
+        self._alphabetic_string_list_helper.validate_string(user_input)
 
         return user_input
 

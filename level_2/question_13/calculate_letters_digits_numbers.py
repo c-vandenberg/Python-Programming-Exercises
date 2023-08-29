@@ -5,12 +5,12 @@ from helpers.string_helpers import StringListHelper
 
 class CalculateLettersDigitsNumbers:
     def __init__(self, string_list_helper: StringListHelper):
-        self.string_list_helper = string_list_helper
+        self._string_list_helper = string_list_helper
 
     def _get_user_input(self) -> list[str]:
         user_input: str = input('Please enter your text: ')
 
-        return self.string_list_helper.get_validated_string_list(
+        return self._string_list_helper.get_validated_string_list(
             user_input,
             ' '
         )
