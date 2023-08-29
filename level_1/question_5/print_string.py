@@ -19,4 +19,7 @@ class PrintString:
 
     @string.setter
     def string(self, new_string: str) -> None:
+        if new_string != str:
+            raise TypeError('New value for string must be of type str')
+
         self._string = new_string

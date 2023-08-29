@@ -13,5 +13,8 @@ class ClassAttributeInstanceAttribute:
         return self._test_class_instance_attribute
 
     @test_class_instance_attribute.setter
-    def test_class_instance_attribute(self, new_test_class_instance_attribute: str):
+    def test_class_instance_attribute(self, new_test_class_instance_attribute: str) -> None:
+        if new_test_class_instance_attribute != str:
+            raise TypeError('New value for test class instance attribute must be of type str')
+
         self._test_class_instance_attribute = new_test_class_instance_attribute

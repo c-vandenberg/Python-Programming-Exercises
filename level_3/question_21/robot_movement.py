@@ -69,7 +69,10 @@ class RobotMovement:
         return self._x_coordinate
 
     @x_coordinate.setter
-    def x_coordinate(self, new_x_coordinate: float):
+    def x_coordinate(self, new_x_coordinate: float) -> None:
+        if new_x_coordinate != float:
+            raise TypeError('New value for x-coordinate must be of type float')
+
         self._x_coordinate = new_x_coordinate
 
     @property
@@ -78,4 +81,7 @@ class RobotMovement:
 
     @y_coordinate.setter
     def y_coordinate(self, new_y_coordinate: float):
+        if new_y_coordinate != float:
+            raise TypeError('New value for y-coordinate must be of type float')
+
         self._y_coordinate = new_y_coordinate
