@@ -2,7 +2,7 @@
 
 import unittest
 from unittest.mock import patch
-from level_one.question_five.print_string import PrintString
+from level_1.question_5.print_string import PrintString
 
 
 class SimpleStringClassUnitTest(unittest.TestCase):
