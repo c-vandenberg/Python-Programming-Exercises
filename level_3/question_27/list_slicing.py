@@ -33,19 +33,19 @@ class ListSlicing:
         return self._list_lower_limit
 
     @list_lower_limit.setter
-    def list_lower_limit(self, new_lower_limit: int) -> None:
-        if new_lower_limit != int:
+    def list_lower_limit(self, new_list_lower_limit: int) -> None:
+        if new_list_lower_limit != int:
             raise TypeError('New value for lower limit must be of type int')
 
-        self._list_lower_limit = new_lower_limit
+        self._list_lower_limit = new_list_lower_limit
 
     @property
     def list_upper_limit(self) -> int:
         return self._list_upper_limit
 
     @list_upper_limit.setter
-    def list_upper_limit(self, new_upper_limit: int) -> None:
-        if new_upper_limit != int:
+    def list_upper_limit(self, new_list_upper_limit: int) -> None:
+        if new_list_upper_limit != int:
             raise TypeError('New value for upper limit must be of type int')
 
-        self._list_upper_limit = new_upper_limit
+        self._list_upper_limit = new_list_upper_limit
