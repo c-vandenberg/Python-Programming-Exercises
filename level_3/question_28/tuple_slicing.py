@@ -45,6 +45,11 @@ class TupleSlicing:
 
         return squared_tuple[5:]
 
+    def get_last_element(self) -> tuple[int]:
+        squared_tuple: tuple[int] = self._generate_squared_tuple()
+
+        return squared_tuple[-1]
+
     @property
     def dict_lower_limit(self) -> int:
         return self._dict_lower_limit

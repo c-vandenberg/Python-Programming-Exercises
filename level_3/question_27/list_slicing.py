@@ -28,6 +28,11 @@ class ListSlicing:
 
         return squared_list[5:]
 
+    def get_last_element(self) -> int:
+        squared_list: list[int] = self._generate_squared_list()
+
+        return squared_list[-1]
+
     @property
     def list_lower_limit(self) -> int:
         return self._list_lower_limit
