@@ -8,7 +8,7 @@ class ListSlicing:
     def _generate_squared_list(self) -> list[int]:
         squared_list: list[int] = []
 
-        for element in range(self._list_lower_limit, self._list_upper_limit):
+        for element in range(self.list_lower_limit, self.list_upper_limit):
             squared_list.append(element ** 2)
 
         return squared_list
