@@ -98,4 +98,44 @@ class NMinusOnePlusOneHundred:
 
 
 class FibonacciSequence:
+    """
+    f(n) = f(n-1) + f(n-2)
+    """
+    def __init__(self, numeric_string_list_helper: NumericStringListHelper):
+        self.numeric_string_list_helper = numeric_string_list_helper
+        self.fibonacci_sequence: list[str] = []
 
+    def _get_user_input(self) -> list[int]:
+        user_input: str = input('Please enter a single integer greater than zero: ')
+        validated_string_list: list[str] = self.numeric_string_list_helper.get_validated_string_list(user_input, ' ')
+
+        if len(validated_string_list) != 1:
+            raise ValueError('You must enter a single integer')
+
+        for integer in validated_string_list:
+            if int(integer) == 0:
+                raise ValueError('You must enter a a non-zero integer')
+
+        return list(map(lambda x: int(x), validated_string_list))
+
+    def _fibonacci_sequence_recursion(self, user_integer: int):
+        if user_integer < 2:
+            return user_integer
+
+        return self._fibonacci_sequence_recursion(user_integer - 1) + self._fibonacci_sequence_recursion(user_integer - 2)
+
+    def calculate_nth_term(self):
+        user_input: list[int] = self._get_user_input()
+
+        for input in user_input:
+            return self._fibonacci_sequence_recursion(input)
+
+    def calculate_sequence(self) -> str:
+        user_input: list[int] = self._get_user_input()
+        separator: str = ','
+
+        for input in user_input:
+            for number in range(input + 1):
+                self.fibonacci_sequence.append(str(self._fibonacci_sequence_recursion(number)))
+
+        return separator.join(self.fibonacci_sequence)
