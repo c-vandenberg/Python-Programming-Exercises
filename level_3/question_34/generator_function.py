@@ -34,7 +34,7 @@ class DivisibleBySevenNumberGenerator:
         raise ValueError('Please enter a single integer')
 
     @staticmethod
-    def _divisible_by_seven_generator(upper_range: int):
+    def _divisible_by_seven_generator(upper_range: int) -> Generator[int, None, None]:
         for integer in range(0, upper_range):
             if integer % 7 == 0:
                 yield integer
@@ -80,7 +80,7 @@ class InfiniteFibonacciSequence:
     Therefore, we have an infinite loop that generates a Fibonacci sequence
     """
     @staticmethod
-    def _fibonacci_sequence_generator():
+    def _fibonacci_sequence_generator() -> Generator[int, None, None]:
         a: int = 0
         b: int = 1
 

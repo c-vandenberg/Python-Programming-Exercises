@@ -1,17 +1,15 @@
 #!/usr/bin/env python3
 
-from iterable_comprehension import ListComprehension
+from iterable_comprehension import ListComprehension, GeneratorComprehension, DictionaryComprehension
 
 
 def main():
     list_comprehension: ListComprehension = ListComprehension()
-    print(list_comprehension.divisible_by_seven_one_to_one_thousand())
-    print(list_comprehension.numbers_with_three_one_to_one_thousand())
-    print(list_comprehension.count_spaces())
-    print(list_comprehension.count_consonants())
-    print(list_comprehension.tuples_from_list())
-    print(list_comprehension.find_common_numbers_between_lists())
-    print(list_comprehension.find_numerical_strings())
+
+    generator_comprehension: GeneratorComprehension = GeneratorComprehension()
+
+    dictionary_comprehension: DictionaryComprehension = DictionaryComprehension()
+    print(dictionary_comprehension.square_number_dict())
 
 
 if __name__ == '__main__':
