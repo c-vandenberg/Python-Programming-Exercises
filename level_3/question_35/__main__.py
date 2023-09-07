@@ -9,7 +9,7 @@ def main():
     generator_comprehension: GeneratorComprehension = GeneratorComprehension()
 
     dictionary_comprehension: DictionaryComprehension = DictionaryComprehension()
-    print(dictionary_comprehension.square_number_dict())
+    print(dictionary_comprehension.change_value_of_key_in_nested_dictionary())
 
 
 if __name__ == '__main__':
