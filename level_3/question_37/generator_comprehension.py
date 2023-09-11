@@ -1,6 +1,7 @@
 #!/usr/bin/env python3
 
-from typing import Generator
+from helpers.string_helpers import NumericStringListHelper
+from typing import Generator, List
 
 
 class GeneratorComprehension:
@@ -24,6 +25,9 @@ class GeneratorComprehension:
     vowels_generator: Generator[int, None, None] = (char for char in text if char.lower() in ['aeiou']
     """
 
+    def __init__(self, numerical_string_list_helper: NumericStringListHelper):
+        self.numerical_string_list_helper = numerical_string_list_helper
+
     @staticmethod
     def divisible_by_seven_generator() -> list[int]:
         divisible_by_seven_generator: Generator[int, None, None] = \
@@ -35,3 +39,21 @@ class GeneratorComprehension:
             divisible_by_seven_list.append(generated_number)
 
         return divisible_by_seven_list
+
+    def even_number_generator(self):
+        user_input: str = input('Please enter a single digit: ')
+        user_input_string_list: List[str] = self.numerical_string_list_helper.get_validated_string_list(user_input, ' ')
+
+        if len(user_input_string_list) != 1:
+            raise ValueError('You must enter a single digit')
+
+        even_number_generator: Generator[int, None, None] = \
+            (integer for integer in range(int(user_input)+1) if integer % 2 == 0)
+
+        even_number_list: List[str] = []
+        separator = ','
+
+        for generated_number in even_number_generator:
+            even_number_list.append(str(generated_number))
+
+        return separator.join(even_number_list)
