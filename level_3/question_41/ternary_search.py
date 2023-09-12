@@ -80,7 +80,7 @@ class TernarySearch:
             elif midpoint_1_element_value < target_element_value < midpoint_2_element_value:
                 search_list: List[int] = search_list[midpoint_1_element:midpoint_2_element]
 
-    def search_for_target(self):
+    def search_for_target(self) -> None:
         target_element_value: int = self._get_user_input()
         search_list: list[int] = [integer for integer in range(100000001)]
 

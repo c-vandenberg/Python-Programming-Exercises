@@ -40,7 +40,7 @@ class BinarySearch:
 
         return int(user_input)
 
-    def _binary_search_algorithm(self, target_element_value: int, search_list: List[int]) -> Union[int, None]:
+    def binary_search_algorithm(self, target_element_value: int, search_list: List[int]) -> Union[int, None]:
         search_list.sort()
         first_iteration = True
 
@@ -69,7 +69,7 @@ class BinarySearch:
         target_element_value: int = self._get_user_input()
         search_list: list[int] = [integer for integer in range(100000001)]
 
-        binary_search_result: Union[int, None] = self._binary_search_algorithm(target_element_value, search_list)
+        binary_search_result: Union[int, None] = self.binary_search_algorithm(target_element_value, search_list)
 
         if binary_search_result is None:
             print(f'Target Element not found in searched list. Search time was {self._binary_search_time} seconds')
