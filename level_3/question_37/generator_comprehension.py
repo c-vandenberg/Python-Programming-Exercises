@@ -26,7 +26,7 @@ class GeneratorComprehension:
     """
 
     def __init__(self, numerical_string_list_helper: NumericStringListHelper):
-        self.numerical_string_list_helper = numerical_string_list_helper
+        self._numerical_string_list_helper = numerical_string_list_helper
 
     @staticmethod
     def divisible_by_seven_generator() -> list[int]:
@@ -42,7 +42,9 @@ class GeneratorComprehension:
 
     def even_number_generator(self):
         user_input: str = input('Please enter a single digit: ')
-        user_input_string_list: List[str] = self.numerical_string_list_helper.get_validated_string_list(user_input, ' ')
+        user_input_string_list: List[str] = self._numerical_string_list_helper.get_validated_string_list(
+            user_input, ' '
+        )
 
         if len(user_input_string_list) != 1:
             raise ValueError('You must enter a single digit')
