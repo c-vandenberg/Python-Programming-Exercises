@@ -2,7 +2,7 @@
 
 from helpers.string_helpers import NumericStringListHelper
 from helpers.time_helpers import StopWatch
-from level_3.question_40.binary_search import BinarySearch
+from level_3.exercise_40.binary_search import BinarySearch
 from exponential_binary_search import ExponentialBinarySearch
 
 

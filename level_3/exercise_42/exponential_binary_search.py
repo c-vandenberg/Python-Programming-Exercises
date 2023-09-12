@@ -3,7 +3,7 @@
 from helpers.string_helpers import NumericStringListHelper
 from helpers.time_helpers import StopWatch
 from typing import List, Union
-from level_3.question_40.binary_search import BinarySearch
+from level_3.exercise_40.binary_search import BinarySearch
 
 
 class ExponentialBinarySearch:
