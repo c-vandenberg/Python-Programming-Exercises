@@ -3,23 +3,15 @@
 from helpers.string_helpers import NumericStringListHelper
 from helpers.time_helpers import StopWatch
 from level_3.question_40.binary_search import BinarySearch
-from interpolation_search import ExponentialBinarySearch
+from interpolation_search import InterpolationSearch
 
 
 def main():
-    binary_numeric_string_helper: NumericStringListHelper = NumericStringListHelper()
-    binary_stop_watch: StopWatch = StopWatch()
-    binary_search: BinarySearch = BinarySearch(binary_numeric_string_helper, binary_stop_watch)
+    numeric_string_helper: NumericStringListHelper = NumericStringListHelper()
+    stop_watch: StopWatch = StopWatch()
 
-    exponential_binary_numeric_string_helper: NumericStringListHelper = NumericStringListHelper()
-    exponential_binary_stop_watch: StopWatch = StopWatch()
-    exponential_binary_search = ExponentialBinarySearch(
-        exponential_binary_numeric_string_helper,
-        exponential_binary_stop_watch,
-        binary_search
-    )
-
-    exponential_binary_search.search_for_target()
+    interpolation_search: InterpolationSearch = InterpolationSearch(numeric_string_helper, stop_watch)
+    interpolation_search.search_for_target()
 
 
 if __name__ == '__main__':

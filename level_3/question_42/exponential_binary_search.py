@@ -54,13 +54,9 @@ class ExponentialBinarySearch:
         search_list_size: int = len(search_list)
         left_index: int = 0
         right_index: int = 1
-        first_iteration = True
+        self._stop_watch.start()
 
         while right_index <= search_list_size:
-            if first_iteration:
-                first_iteration = False
-                self._stop_watch.start()
-
             if search_list[right_index] == target_element_value:
                 self._exponential_binary_search_time = self._stop_watch.stop()
                 self._stop_watch.reset()
