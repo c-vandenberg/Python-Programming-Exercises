@@ -42,13 +42,9 @@ class BinarySearch:
 
     def binary_search_algorithm(self, target_element_value: int, search_list: List[int]) -> Union[int, None]:
         search_list.sort()
-        first_iteration = True
+        self._stop_watch.start()
 
         while True:
-            if first_iteration:
-                first_iteration = False
-                self._stop_watch.start()
-
             mid_element: int = round(len(search_list) / 2)
             mid_element_value: int = search_list[round(len(search_list) / 2)]
 

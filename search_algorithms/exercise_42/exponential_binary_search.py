@@ -3,7 +3,7 @@
 from helpers.string_helpers import NumericStringListHelper
 from helpers.time_helpers import StopWatch
 from typing import List, Union
-from level_3.exercise_40.binary_search import BinarySearch
+from search_algorithms.exercise_40.binary_search import BinarySearch
 
 
 class ExponentialBinarySearch:
@@ -20,10 +20,10 @@ class ExponentialBinarySearch:
     1. Initialise - Start with the entire sorted list or array
     2. Define Two Indices - start with two indices, 'left' and 'right'. Set 'left' = 0 and 'right' = 1
     3. Comparison - Carry out the following comparison logic:
-        If the target matches the element at index 'right', you have found the target
-        If the target is greater than the element at index 'right', set index 'left' = (index 'right' - 1) and double
+        - If the target matches the element at index 'right', you have found the target
+        - If the target is greater than the element at index 'right', set index 'left' = (index 'right' - 1) and double
         the value of index 'right' but ensure that it does not exceed the size of the data set. Repeat comparison logic
-        If the target is less than the element at index 'right', perform a binary search on the subarray between index
+        - If the target is less than the element at index 'right', perform a binary search on the subarray between index
         'left' and index 'right'
     """
     def __init__(

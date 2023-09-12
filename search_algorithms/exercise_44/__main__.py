@@ -2,7 +2,6 @@
 
 from helpers.string_helpers import NumericStringListHelper
 from helpers.time_helpers import StopWatch
-from level_3.exercise_40.binary_search import BinarySearch
 from interpolation_search import InterpolationSearch
 
 

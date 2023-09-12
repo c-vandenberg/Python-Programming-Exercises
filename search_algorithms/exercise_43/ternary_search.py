@@ -19,12 +19,12 @@ class TernarySearch:
     1. Initialise - Start with the entire sorted list or array
     2. Define Two Midpoints - Divide the current search space into three equal parts, and take these two midpoints
     3. Comparison - Compare the target element with the elements at midpoint 1 and midpoint 2:
-        If the target matches the element at either midpoint 1 or midpoint 2, you have found the target
-        If the target is less than the element at midpoint 1, you narrow the search range to the left third/less than
+        - If the target matches the element at either midpoint 1 or midpoint 2, you have found the target
+        - If the target is less than the element at midpoint 1, you narrow the search range to the left third/less than
         midpoint 1
-        If the target is greater than the element at midpoint 2, you narrow the search range to the right third/greater
+        - If the target is greater than the element at midpoint 2, you narrow the search range to the right third/greater
         than midpoint 2
-        If the target is between midpoint 1 and midpoint 2, you can narrow the search range to the middle third/between
+        - If the target is between midpoint 1 and midpoint 2, you can narrow the search range to the middle third/between
         midpoint 1 and midpoint 2
     4. Repeat: Repeat steps 2 and 3 until you have found the target element, or it is determined that it is not in the
        sorted list/array
