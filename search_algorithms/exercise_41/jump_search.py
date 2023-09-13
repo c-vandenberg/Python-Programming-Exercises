@@ -3,6 +3,7 @@
 from helpers.string_helpers import NumericStringListHelper
 from helpers.time_helpers import StopWatch
 from typing import List, Union
+from math import sqrt
 
 
 class JumpSearch:
@@ -36,48 +37,52 @@ class JumpSearch:
         self._jump_search_time = None
 
     def _get_user_input(self) -> int:
-        user_input: str = input('Please enter a single digit: ')
+        user_input: str = input('Please enter a single integer: ')
         user_input_string_list: List[str] = self._numerical_string_list_helper.get_validated_string_list(
             user_input, ' '
         )
 
-        if len(user_input_string_list) != 1:
-            raise ValueError('You must enter a single digit')
+        if len(user_input_string_list) != 1 or not user_input.isdigit():
+            raise ValueError('You must enter a single integer')
 
         return int(user_input)
 
-    def jump_search_algorithm(self, target_element_value: int, search_list: List[int]) -> Union[int, None]:
+    def jump_search_algorithm(self, target_element_value: [Union[int, float]],
+                              search_list: List[Union[int, float]]) -> Union[int, None]:
+
         search_list.sort()
-        first_iteration = True
+        block_size: int = round(sqrt(len(search_list)))
+        left_index: int = 0
+        right_index: int = block_size - 1
 
-        while True:
-            if first_iteration:
-                first_iteration = False
-                self._stop_watch.start()
+        while right_index <= (len(search_list) - 1):
+            if target_element_value > search_list[right_index]:
+                left_index: int = right_index + 1
+                right_index: int = right_index + block_size
+            elif target_element_value < search_list[right_index]:
+                return self._linear_search_algorithm(target_element_value, search_list[left_index:right_index])
 
-            mid_element: int = round(len(search_list) / 2)
-            mid_element_value: int = search_list[round(len(search_list) / 2)]
+        return None
 
-            if mid_element_value == target_element_value:
-                self._jump_search_time = self._stop_watch.stop()
-                self._stop_watch.reset()
-                return mid_element_value
-            elif len(search_list) == 1:
-                self._jump_search_time = self._stop_watch.stop()
-                self._stop_watch.reset()
-                return None
-            elif target_element_value < mid_element_value:
-                search_list: List[int] = search_list[:mid_element]
-            elif target_element_value > mid_element_value:
-                search_list: List[int] = search_list[-mid_element:]
+    @staticmethod
+    def _linear_search_algorithm(target_element_value: int, linear_search_list: List[int]):
+        for element_value in linear_search_list:
+            if element_value == target_element_value:
+                return element_value
+        return None
 
     def search_for_target(self):
         target_element_value: int = self._get_user_input()
-        search_list: list[int] = [integer for integer in range(10001)]
+        search_list: list[int] = [integer for integer in range(100000001)]
 
-        binary_search_result: Union[int, None] = self.jump_search_algorithm(target_element_value, search_list)
+        self._stop_watch.start()
 
-        if binary_search_result is None:
-            print(f'Target Element not found in searched list. Search time was {self._binary_search_time} seconds')
+        jump_search_result: Union[int, None] = self.jump_search_algorithm(target_element_value, search_list)
+
+        self._jump_search_time = self._stop_watch.stop()
+        self._stop_watch.reset()
+
+        if jump_search_result is None:
+            print(f'Target Element not found in searched list. Search time was {self._jump_search_time} seconds')
         else:
-            print(f"Your target value {target_element_value} was found in {self._binary_search_time} seconds")
+            print(f"Your target value {target_element_value} was found in {self._jump_search_time} seconds")

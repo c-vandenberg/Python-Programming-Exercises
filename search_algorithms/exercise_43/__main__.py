@@ -8,6 +8,7 @@ from ternary_search import TernarySearch
 def main():
     numeric_string_helper: NumericStringListHelper = NumericStringListHelper()
     stop_watch: StopWatch = StopWatch()
+
     ternary_search: TernarySearch = TernarySearch(numeric_string_helper, stop_watch)
     ternary_search.search_for_target()
 

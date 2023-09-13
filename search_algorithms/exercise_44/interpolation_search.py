@@ -65,13 +65,13 @@ class InterpolationSearch:
             user_input, ' '
         )
 
-        if len(user_input_string_list) != 1:
-            raise ValueError('You must enter a single digit')
+        if len(user_input_string_list) != 1 or not user_input.isdigit():
+            raise ValueError('You must enter a single integer')
 
         return int(user_input)
 
-    def _linear_interpolation_search_algorithm(self, target_element_value: int, search_list: List[int]
-                                               ) -> Union[int, None]:
+    def _linear_interpolation_search_algorithm(self, target_element_value: [Union[int, float]],
+                                               search_list: List[Union[int, float]]) -> Union[int, None]:
         search_list.sort()
         left_index: int = 0
         right_index: int = len(search_list) - 1

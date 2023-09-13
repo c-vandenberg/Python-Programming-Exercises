@@ -8,6 +8,7 @@ from binary_search import BinarySearch
 def main():
     numeric_string_helper: NumericStringListHelper = NumericStringListHelper()
     stop_watch: StopWatch = StopWatch()
+
     binary_search: BinarySearch = BinarySearch(numeric_string_helper, stop_watch)
     binary_search.search_for_target()
 

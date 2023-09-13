@@ -40,23 +40,18 @@ class TernarySearch:
             user_input, ' '
         )
 
-        if len(user_input_string_list) != 1:
-            raise ValueError('You must enter a single digit')
+        if len(user_input_string_list) != 1 or not user_input.isdigit():
+            raise ValueError('You must enter a single integer')
 
         return int(user_input)
 
-    def _ternary_search_algorithm(self, target_element_value: int, search_list: List[int]) -> Union[int, None]:
+    @staticmethod
+    def _ternary_search_algorithm(target_element_value: [Union[int, float]],
+                                  search_list: List[Union[int, float]]) -> Union[int, None]:
         search_list.sort()
-        first_iteration = True
 
         while True:
-            if first_iteration:
-                first_iteration = False
-                self._stop_watch.start()
-
-            elif len(search_list) == 1 and search_list[0] != target_element_value:
-                self._ternary_search_time = self._stop_watch.stop()
-                self._stop_watch.reset()
+            if len(search_list) == 1 and search_list[0] != target_element_value:
                 return None
 
             midpoint_1_element: int = round(len(search_list) / 3)
@@ -66,12 +61,8 @@ class TernarySearch:
             midpoint_2_element_value: int = search_list[midpoint_2_element]
 
             if midpoint_1_element_value == target_element_value:
-                self._ternary_search_time = self._stop_watch.stop()
-                self._stop_watch.reset()
                 return midpoint_1_element_value
             elif midpoint_2_element_value == target_element_value:
-                self._ternary_search_time = self._stop_watch.stop()
-                self._stop_watch.reset()
                 return midpoint_2_element_value
             elif target_element_value < midpoint_1_element_value:
                 search_list: List[int] = search_list[:midpoint_1_element]
@@ -84,7 +75,12 @@ class TernarySearch:
         target_element_value: int = self._get_user_input()
         search_list: list[int] = [integer for integer in range(100000001)]
 
+        self._stop_watch.start()
+
         ternary_search_result: Union[int, None] = self._ternary_search_algorithm(target_element_value, search_list)
+
+        self._ternary_search_time = self._stop_watch.stop()
+        self._stop_watch.reset()
 
         if ternary_search_result is None:
             print(f'Target Element not found in searched list. Search time was {self._ternary_search_time} seconds')

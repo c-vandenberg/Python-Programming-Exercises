@@ -35,26 +35,23 @@ class BinarySearch:
             user_input, ' '
         )
 
-        if len(user_input_string_list) != 1:
-            raise ValueError('You must enter a single digit')
+        if len(user_input_string_list) != 1 or not user_input.isdigit():
+            raise ValueError('You must enter a single integer')
 
         return int(user_input)
 
-    def binary_search_algorithm(self, target_element_value: int, search_list: List[int]) -> Union[int, None]:
+    @staticmethod
+    def binary_search_algorithm(target_element_value: [Union[int, float]],
+                                search_list: List[Union[int, float]]) -> Union[int, None]:
         search_list.sort()
-        self._stop_watch.start()
 
         while True:
             mid_element: int = round(len(search_list) / 2)
             mid_element_value: int = search_list[round(len(search_list) / 2)]
 
             if mid_element_value == target_element_value:
-                self._binary_search_time = self._stop_watch.stop()
-                self._stop_watch.reset()
                 return mid_element_value
             elif len(search_list) == 1:
-                self._binary_search_time = self._stop_watch.stop()
-                self._stop_watch.reset()
                 return None
             elif target_element_value < mid_element_value:
                 search_list: List[int] = search_list[:mid_element]
@@ -65,7 +62,12 @@ class BinarySearch:
         target_element_value: int = self._get_user_input()
         search_list: list[int] = [integer for integer in range(100000001)]
 
+        self._stop_watch.start()
+
         binary_search_result: Union[int, None] = self.binary_search_algorithm(target_element_value, search_list)
+
+        self._binary_search_time = self._stop_watch.stop()
+        self._stop_watch.reset()
 
         if binary_search_result is None:
             print(f'Target Element not found in searched list. Search time was {self._binary_search_time} seconds')

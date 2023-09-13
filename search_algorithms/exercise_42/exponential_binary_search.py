@@ -43,23 +43,20 @@ class ExponentialBinarySearch:
             user_input, ' '
         )
 
-        if len(user_input_string_list) != 1:
-            raise ValueError('You must enter a single digit')
+        if len(user_input_string_list) != 1 or not user_input.isdigit():
+            raise ValueError('You must enter a single integer')
 
         return int(user_input)
 
-    def _exponential_binary_search_algorithm(self, target_element_value: int, search_list: List[int]
-                                             ) -> Union[int, None]:
+    def _exponential_binary_search_algorithm(self, target_element_value: [Union[int, float]],
+                                             search_list: List[Union[int, float]]) -> Union[int, None]:
         search_list.sort()
-        search_list_size: int = len(search_list)
+        search_list_size: int = len(search_list) - 1
         left_index: int = 0
         right_index: int = 1
-        self._stop_watch.start()
 
         while right_index <= search_list_size:
             if search_list[right_index] == target_element_value:
-                self._exponential_binary_search_time = self._stop_watch.stop()
-                self._stop_watch.reset()
                 return search_list[right_index]
             elif target_element_value > search_list[right_index]:
                 left_index: int = right_index - 1
@@ -69,20 +66,23 @@ class ExponentialBinarySearch:
                 exponential_binary_search_result: Union[int, None] = self._binary_search.binary_search_algorithm(
                     target_element_value, search_sub_list
                 )
-                self._exponential_binary_search_time = self._stop_watch.stop()
                 return exponential_binary_search_result
 
-        self._exponential_binary_search_time = self._stop_watch.stop()
         return None
 
     def search_for_target(self) -> None:
         target_element_value: int = self._get_user_input()
         search_list: list[int] = [integer for integer in range(100000001)]
 
+        self._stop_watch.start()
+
         exponential_binary_search_result: Union[int, None] = self._exponential_binary_search_algorithm(
             target_element_value,
             search_list
         )
+
+        self._exponential_binary_search_time = self._stop_watch.stop()
+        self._stop_watch.reset()
 
         if exponential_binary_search_result is None:
             print(f'Target Element not found in searched list. Search time was '
