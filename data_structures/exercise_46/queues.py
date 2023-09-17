@@ -55,7 +55,7 @@ class StringLifoQueue:
         return self._string_lifo_queue.get()
 
     """
-        Return True if the queue is empty, False otherwise
+    Return True if the queue is empty, False otherwise
     """
     def is_empty(self) -> bool:
         return self._string_lifo_queue.empty()
@@ -90,7 +90,7 @@ class StringPriorityQueue:
         return self._string_priority_queue.get()
 
     """
-        Return True if the queue is empty, False otherwise
+    Return True if the queue is empty, False otherwise
     """
     def is_empty(self) -> bool:
         return self._string_priority_queue.empty()
