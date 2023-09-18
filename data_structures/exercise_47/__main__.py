@@ -1,12 +1,10 @@
 #!/usr/bin/env python3
 
-from collections import deque
 from stacks import StringStack
 
 
 def main():
-    stack: deque = deque()
-    string_stack: StringStack = StringStack(stack)
+    string_stack: StringStack = StringStack()
 
     string_stack.push_top('Item 1')
     string_stack.push_top('Item 3')
