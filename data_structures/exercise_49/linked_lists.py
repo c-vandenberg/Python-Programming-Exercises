@@ -7,6 +7,7 @@ class Node:
     def __init__(self, data: Any):
         self._data = data
         self._next = None
+        self._previous = None
 
     @property
     def data(self) -> Any:
@@ -21,8 +22,16 @@ class Node:
         return self._next
 
     @next.setter
-    def next(self, new_next):
+    def next(self, new_next: Node):
         self._next = new_next
+
+    @property
+    def previous(self):
+        return self._previous
+
+    @previous.setter
+    def previous(self, new_previous: Node):
+        self._previous = new_previous
 
 
 class SinglyLinkedList:
@@ -106,3 +115,66 @@ class SinglyLinkedList:
         if not self._head:
             return None
         current_node: Node = self.head
+
+
+    @staticmethod
+    def search_node_by_value(self, node_value: Any) -> Union[Node, None]:
+        if not self.head:
+            return  None
+
+        current_node: Node = self.head
+
+        while current_node.data != node_value:
+            current_node = current_node.next
+
+        return current_node
+
+
+class DoublyLinkedList:
+    def __init__(self):
+        self._head = None
+        self._tail = None
+
+    @property
+    def head(self) -> Node:
+        return self._head
+
+    @head.setter
+    def head(self, new_head: Node) -> None:
+        self._head = new_head
+
+    @property
+    def tail(self) -> None:
+        return self._tail
+
+    @tail.setter
+    def tail(self, new_tail: Node):
+        self._tail = new_tail
+
+    def append_node(self, data: Any) -> None:
+        # Create new node
+        new_node: Node = Node(data)
+
+        # Check if no nodes in linked list
+        if not self.head:
+            self.head = new_node
+            self.tail = new_node
+
+        # Initialise current node as tail node
+        current_node: Node = self.tail
+
+        # Set
+        current_node.next = new_node
+        new_node.previous = current_node
+        self.tail = new_node
+
+
+
+        # Traverse linked list until we hit a node with self.next == None (i.e. we have hit the tail node)
+        while current_node.next:
+            previous_node: Node = current_node
+            current_node: Node = current_node.next
+
+        previous_node.next = current_node
+        current_node.previous = previous_node
+
