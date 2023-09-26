@@ -112,6 +112,7 @@ class SinglyLinkedList:
 
     """Remove and return node form linked list by position"""
     def remove_node_by_position(self, node_position: int) -> Union[Node, None]:
+        # If no nodes in linked list, return None
         if not self._head:
             return None
 
@@ -166,7 +167,7 @@ class DoublyLinkedList:
         self._head = new_head
 
     @property
-    def tail(self) -> None:
+    def tail(self) -> Node:
         return self._tail
 
     @tail.setter
@@ -177,8 +178,8 @@ class DoublyLinkedList:
         # Create new node
         new_node: Node = Node(data)
 
-        # Check if no nodes in linked list
-        if not self.head:
+        # If no nodes in linked list, set new node as both head and tail
+        if not self.head or not self.tail:
             self.head = new_node
             self.tail = new_node
 
@@ -189,8 +190,6 @@ class DoublyLinkedList:
         current_node.next = new_node
         new_node.previous = current_node
         self.tail = new_node
-
-
 
         # Traverse linked list until we hit a node with self.next == None (i.e. we have hit the tail node)
         while current_node.next:
