@@ -22,7 +22,7 @@ class Node:
         return self._next
 
     @next.setter
-    def next(self, new_next: Node):
+    def next(self, new_next: 'Node'):
         self._next = new_next
 
     @property
@@ -30,7 +30,7 @@ class Node:
         return self._previous
 
     @previous.setter
-    def previous(self, new_previous: Node):
+    def previous(self, new_previous: 'Node'):
         self._previous = new_previous
 
 
@@ -114,13 +114,35 @@ class SinglyLinkedList:
     def remove_node_by_position(self, node_position: int) -> Union[Node, None]:
         if not self._head:
             return None
+
+        # Initialise current node as head node and previous node as None
         current_node: Node = self.head
+        previous_node: Union[None, Node] = None
 
+        # If position is 0 (i.e. the head node), set head node as next node in linked list and return current node
+        if node_position == 0:
+            self.head = current_node.next
+            current_node.next = None
 
-    @staticmethod
+            return current_node
+
+        current_position: int = 1
+
+        # Traverse linked list until we hit desired node position
+        while current_position != node_position:
+            previous_node = current_node
+            current_node = current_node.next
+            current_position += 1
+
+        # Set previous node pointer to node after current node and return current node
+        previous_node.next = current_node.next
+        current_node.next = None
+
+        return current_node
+
     def search_node_by_value(self, node_value: Any) -> Union[Node, None]:
         if not self.head:
-            return  None
+            return None
 
         current_node: Node = self.head
 
