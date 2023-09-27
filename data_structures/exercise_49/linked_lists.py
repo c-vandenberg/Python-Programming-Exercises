@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 
-from typing import List, Any, Union
+from typing import Any, Union
 
 
 class Node:
@@ -34,7 +34,7 @@ class Node:
         self._previous = new_previous
 
 
-class LinkedList:
+class BaseLinkedList:
     def __init__(self):
         self._head = None
         self._tail = None
@@ -61,19 +61,13 @@ class LinkedList:
         new_node: Node = Node(data)
 
         # If no nodes in linked list, set new node as both head and tail
-        if not self.head:
+        if not self._head:
             self.head = new_node
             self.tail = new_node
 
             return
 
-        # Initialise current node as tail node
-        current_node: Node = self.tail
-
-        # Append new node to tail node
-        current_node.next = new_node
-        new_node.previous = current_node
-        self.tail = new_node
+        self._append_node(new_node)
 
     """Prepend node to beginning of linked list"""
     def prepend_node(self, data: Any):
@@ -87,28 +81,119 @@ class LinkedList:
 
             return
 
+        self._prepend_node(new_node)
+
+    """Remove and return node from linked list by value"""
+    def remove_node_by_value(self, node_value: Any) -> Union[Node, None]:
+        # If no nodes in linked list, return None
+        if not self._head:
+            return None
+
+        # If value in head node, remove head node
+        if node_value == self.head.data:
+            return self._remove_head_node()
+
+        current_node: Node = self.head
+
+        return self._remove_node_by_value(current_node, node_value)
+
+    """Remove and return node form linked list by position"""
+    def remove_node_by_position(self, node_position: int) -> Union[Node, None]:
+        # If no nodes in linked list, return None
+        if not self._head:
+            return None
+
+        # If position is 0 (i.e. the head node), remove current head node
+        if node_position == 0:
+            return self._remove_head_node()
+
+        current_node: Node = self.head
+
+        return self._remove_node_by_position(current_node, node_position)
+
+    """Remove head logic specific to type of linked list (i.e. singly or doubly linked list)"""
+    def _remove_head_node(self) -> Node:
+        current_node: Node = self.head
+        next_node: Node = current_node.next
+        next_node.previous = None
+        self.head = next_node
+        current_node.next = None
+
+        return current_node
+
+    """Forward search for node in linked list by value"""
+    def forward_search_node_by_value(self, node_value: Any) -> Union[Node, None]:
+        if not self.head:
+            return None
+
+        current_node: Node = self.head
+
+        while current_node.data != node_value:
+            # If we have reached the tail node and have not found the node with the given data, raise error
+            if not current_node.next:
+                raise ValueError(f'Node with value {node_value} not found')
+
+            current_node = current_node.next
+
+        return current_node
+
+    """Print visual representation of linked list data structure"""
+    def display_linked_list(self, node_separator: str):
+        if not self.head:
+            return None
+
+        current_node: Node = self.head
+        linked_list_display: str = ""
+
+        while current_node.next:
+            linked_list_display += f"{current_node.data} {node_separator} "
+
+            current_node = current_node.next
+
+        linked_list_display += f"{current_node.data}"
+
+        return linked_list_display
+
+    """Append node method logic specific to type of linked list (i.e. singly or doubly linked list)"""
+    def _append_node(self, new_node: Node):
+        # Logic to be implemented in child class
+        pass
+
+    """Prepend node method logic specific to type of linked list (i.e. singly or doubly linked list)"""
+    def _prepend_node(self, new_node: Node):
+        # Logic to be implemented in child class
+        pass
+
+    """Remove node by value logic specific to type of linked list (i.e. singly or doubly linked list)"""
+    def _remove_node_by_value(self, current_node: Node, node_value: Any):
+        # Logic to be implemented in child class
+        pass
+
+    """Remove node by position logic specific to type of linked list (i.e. singly or doubly linked list)"""
+    def _remove_node_by_position(self, current_node: Node, node_position: Any):
+        # Logic to be implemented in child class
+        pass
+
+
+class SinglyLinkedList(BaseLinkedList):
+    def _append_node(self, new_node: Node):
+        # Initialise current node as tail node
+        current_node: Node = self.tail
+
+        # Append new node to tail node
+        current_node.next = new_node
+        self.tail = new_node
+
+    def _prepend_node(self, new_node: Node):
         # Set new node pointer to reference head of list. Do this first so that we don't orphan the old head node
         new_node.next = self.head
 
         # Set new node as new head node
         self.head = new_node
 
-    """Remove and return node from linked list by value"""
-    def remove_node_by_value(self, node_value: Any) -> Union[Node, None]:
-        # If no nodes in linked list, return None
-        if not self._head:
-            return None
-
-        # Initialise current node as head node and previous node as None
-        current_node: Node = self.head
+    def _remove_node_by_value(self, current_node: Node, node_value: Any) -> Union[Node, None]:
+        # Initialise previous node as None
         previous_node: Union[None, Node] = None
-
-        # If value in head node, set head node as next node in linked list and return current node
-        if current_node.data == node_value:
-            self.head = current_node.next
-            current_node.next = None
-
-            return current_node
 
         # Traverse linked list until we hit node with desired value
         while current_node.data != node_value:
@@ -119,35 +204,22 @@ class LinkedList:
             previous_node = current_node
             current_node = current_node.next
 
-        # Set previous node pointer to node after current node and return current node
-        previous_node.next = current_node.next
-
-        # If value was in tail node , set tail node as previous node
+        # If value was in tail node, set tail node as previous node
         if self.tail == current_node:
+            previous_node.next = None
             self.tail = previous_node
+        else:
+            # Set previous node pointer to node after current node and return current node
+            previous_node.next = current_node.next
 
         current_node.next = None
 
         return current_node
 
-    """Remove and return node form linked list by position"""
-    def remove_node_by_position(self, node_position: int) -> Union[Node, None]:
-        # If no nodes in linked list, return None
-        if not self._head:
-            return None
-
-        # Initialise current node as head node and previous node as None
-        current_node: Node = self.head
+    def _remove_node_by_position(self, current_node: Node, node_position: int) -> Union[Node, None]:
+        # Initialise previous node as None, and initialise current position as zero
         previous_node: Union[None, Node] = None
-
-        # If position is 0 (i.e. the head node), set head node as next node in linked list and return current node
-        if node_position == 0:
-            self.head = current_node.next
-            current_node.next = None
-
-            return current_node
-
-        current_position: int = 1
+        current_position: int = 0
 
         # Traverse linked list until we hit desired node position
         while current_position != node_position:
@@ -170,59 +242,26 @@ class LinkedList:
 
         return current_node
 
-    """Search for node in linked list by value"""
-    def search_node_by_value(self, node_value: Any) -> Union[Node, None]:
-        if not self.head:
-            return None
 
-        current_node: Node = self.head
+class DoublyLinkedList(BaseLinkedList):
+    def _append_node(self, new_node: Node):
+        # Initialise current node as tail node
+        current_node: Node = self.tail
 
-        while current_node.data != node_value:
-            current_node = current_node.next
+        # Append new node to tail node
+        current_node.next = new_node
+        new_node.previous = current_node
+        self.tail = new_node
 
-        return current_node
+    def _prepend_node(self, new_node: Node):
+        # Set new node pointer to reference head of list. Do this first so that we don't orphan the old head node
+        new_node.next = self.head
+        self.head.previous = new_node
 
-
-class DoublyLinkedList(LinkedList):
-    """Prepend node to beginning of linked list"""
-    def prepend_node(self, data: Any) -> None:
-        # Create new node
-        new_node: Node = Node(data)
-
-        # If no nodes in linked list, set new node as both head and tail
-        if not self.head:
-            self.head = new_node
-            self.tail = new_node
-
-            return
-
-        # Set old head node previous pointer to new node
-        old_head_node: Node = self.head
-        old_head_node.previous = new_node
-
-        # Set new node next pointer to old head node and set new node as head node
-        new_node.next = old_head_node
+        # Set new node as new head node
         self.head = new_node
 
-    """Remove and return node from linked list by value"""
-    def remove_node_by_value(self, node_value: Any) -> Union[Node, None]:
-        # If no nodes in linked list, return None
-        if not self._head:
-            return None
-
-        # Initialise current node as head node
-        current_node: Node = self.head
-
-        # If value in head node, set head node as next node in linked list, set new head node previous pointer to None,
-        # and return current node
-        if current_node.data == node_value:
-            next_node: Node = current_node.next
-            next_node.previous = None
-            self.head = next_node
-            current_node.next = None
-
-            return current_node
-
+    def _remove_node_by_value(self, current_node: Node, node_value: Any) -> Union[Node, None]:
         # Traverse linked list until we hit node with desired value
         while current_node.data != node_value:
             # If we have reached the tail node and have not found the node with the given data, raise error
@@ -233,36 +272,23 @@ class DoublyLinkedList(LinkedList):
 
         # Set previous node pointer to node after current node and return current node
         previous_node: Node = current_node.previous
-        next_node: Node = current_node.next
-
-        previous_node.next = next_node
-        next_node.previous = previous_node
 
         # If value was in tail node , set tail node as previous node
         if self.tail == current_node:
+            previous_node.next = None
             self.tail = previous_node
+        else:
+            next_node: Node = current_node.next
+            previous_node.next = next_node
+            next_node.previous = previous_node
 
         current_node.next = None
 
         return current_node
 
-    """Remove and return node form linked list by position"""
-    def remove_node_by_position(self, node_position: int) -> Union[Node, None]:
-        # If no nodes in linked list, return None
-        if not self._head:
-            return None
-
-        # Initialise current node as head node
-        current_node: Node = self.head
-
-        # If position is 0 (i.e. the head node), set head node as next node in linked list and return current node
-        if node_position == 0:
-            self.head = current_node.next
-            current_node.next = None
-
-            return current_node
-
-        current_position: int = 1
+    def _remove_node_by_position(self, current_node: Node, node_position: int) -> Union[Node, None]:
+        # Initialise current position as zero
+        current_position: int = 0
 
         # Traverse linked list until we hit desired node position
         while current_position != node_position:
@@ -275,13 +301,32 @@ class DoublyLinkedList(LinkedList):
 
         # Set previous node pointer to node after current node and return current node
         previous_node: Node = current_node.previous
-        next_node: Node = current_node.next
-
-        previous_node.next = next_node
-        next_node.previous = previous_node
 
         # If value was in tail node , set tail node as previous node
         if self.tail == current_node:
+            previous_node.next = None
             self.tail = previous_node
+        else:
+            next_node: Node = current_node.next
+            previous_node.next = next_node
+            next_node.previous = previous_node
+
+        current_node.next = None
+
+        return current_node
+
+    """Backward search for node in linked list by value"""
+    def backward_search_node_by_value(self, node_value: Any) -> Union[Node, None]:
+        if not self.head:
+            return None
+
+        current_node: Node = self.tail
+
+        while current_node.data != node_value:
+            # If we have reached the head node and have not found the node with the given data, raise error
+            if not current_node.previous:
+                raise ValueError(f'Node with value {node_value} not found')
+
+            current_node = current_node.previous
 
         return current_node
