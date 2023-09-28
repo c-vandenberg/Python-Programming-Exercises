@@ -18,8 +18,8 @@ def main():
 
     five_node: Node = doubly_linked_list.forward_search_node_by_value(6)
 
-    print(singly_linked_list.display_linked_list(">"))
-    print(doubly_linked_list.display_linked_list("<>"))
+    print(singly_linked_list)
+    print(doubly_linked_list)
 
 
 if __name__ == '__main__':

@@ -138,7 +138,7 @@ class BaseLinkedList:
         return current_node
 
     """Print visual representation of linked list data structure"""
-    def display_linked_list(self, node_separator: str):
+    def _display_linked_list(self, node_separator: str):
         if not self.head:
             return None
 
@@ -243,6 +243,9 @@ class SinglyLinkedList(BaseLinkedList):
 
             return current_node
 
+    def __str__(self):
+        return self._display_linked_list('>')
+
 
 class DoublyLinkedList(BaseLinkedList):
     def _append_node(self, new_node: Node):
@@ -331,3 +334,6 @@ class DoublyLinkedList(BaseLinkedList):
             current_node = current_node.previous
 
         return current_node
+
+    def __str__(self):
+        return self._display_linked_list('<>')
