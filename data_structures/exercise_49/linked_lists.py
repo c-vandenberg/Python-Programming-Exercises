@@ -111,7 +111,7 @@ class BaseLinkedList:
 
         return self._remove_node_by_position(current_node, node_position)
 
-    """Remove head logic specific to type of linked list (i.e. singly or doubly linked list)"""
+    """Remove head node and set head.next node as new head node"""
     def _remove_head_node(self) -> Node:
         current_node: Node = self.head
         next_node: Node = current_node.next
@@ -205,7 +205,7 @@ class SinglyLinkedList(BaseLinkedList):
             current_node = current_node.next
 
         # If value was in tail node, set tail node as previous node
-        if self.tail == current_node:
+        if current_node == self.tail:
             previous_node.next = None
             self.tail = previous_node
         else:
@@ -231,16 +231,17 @@ class SinglyLinkedList(BaseLinkedList):
             current_node = current_node.next
             current_position += 1
 
-        # Set previous node pointer to node after current node and return current node
-        previous_node.next = current_node.next
+            # If value was in tail node, set tail node as previous node
+            if current_node == self.tail:
+                previous_node.next = None
+                self.tail = previous_node
+            else:
+                # Set previous node pointer to node after current node and return current node
+                previous_node.next = current_node.next
 
-        # If value was in tail node , set tail node as previous node
-        if self.tail == current_node:
-            self.tail = previous_node
+            current_node.next = None
 
-        current_node.next = None
-
-        return current_node
+            return current_node
 
 
 class DoublyLinkedList(BaseLinkedList):
