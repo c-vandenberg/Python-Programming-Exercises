@@ -12,10 +12,10 @@ class BaseGraph:
             # Nodes are defined as dictionary key with the edges being a list of neighbouring nodes
             self.nodes[node] = []
 
-    def add_edge(self, from_node: Any, to_node: Any):
-        self._add_edge(from_node, to_node)
+    def add_edge(self, from_node: Any, to_node: Any, weight: Union[int, float, None] = None):
+        self._add_edge(from_node, to_node, weight)
 
-    def _add_edge(self, from_node: Any, to_node: Any):
+    def _add_edge(self, from_node: Any, to_node: Any, weight: Union[int, float, None]):
         # Add edge logic to be implemented in child class
         pass
 
@@ -24,13 +24,19 @@ class BaseGraph:
 
 
 class DirectedGraph(BaseGraph):
-    def _add_edge(self, from_node: Any, to_node: Any):
+    def _add_edge(self, from_node: Any, to_node: Any, weight: Union[int, float, None]):
         if from_node in self.nodes and to_node in self.nodes:
-            self.nodes[from_node].append(to_node)
+            self.nodes[from_node] = [
+                {(from_node, to_node): weight}
+            ]
 
 
 class UndirectedGraph(BaseGraph):
-    def _add_edge(self, from_node: Any, to_node: Any):
+    def _add_edge(self, from_node: Any, to_node: Any, weight: Union[int, float, None]):
         if from_node in self.nodes and to_node in self.nodes:
-            self.nodes[from_node].append(to_node)
-            self.nodes[to_node].append(from_node)
+            self.nodes[from_node] = [
+                {(from_node, to_node): weight}
+            ]
+            self.nodes[to_node] = [
+                {(to_node, from_node): weight}
+            ]
