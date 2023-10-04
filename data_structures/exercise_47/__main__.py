@@ -1,10 +1,10 @@
 #!/usr/bin/env python3
 
-from stacks import StringStack
+from stacks import Stack
 
 
 def main():
-    string_stack: StringStack = StringStack()
+    string_stack: Stack = Stack()
 
     string_stack.push_top('Item 1')
     string_stack.push_top('Item 3')
