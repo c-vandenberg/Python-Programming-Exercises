@@ -1,37 +1,55 @@
 #!/usr/bin/env python3
 
 from data_structures.exercise_47.stacks import Stack
-from graphs import DirectedGraph
-from typing import Any, Union, List
+from graphs import DirectedGraph, UndirectedGraph
+from typing import Any, Union, List, Set
 
 
 def main():
-    # Create a graph
+    # Create directed graph
     dfs_stack = Stack()
-    my_graph = DirectedGraph(dfs_stack)
+    my_directed_graph = DirectedGraph(dfs_stack)
 
     # Add nodes
-    my_graph.add_node("A")
-    my_graph.add_node("B")
-    my_graph.add_node("C")
-    my_graph.add_node("D")
-    my_graph.add_node("E")
-    my_graph.add_node("F")
-    my_graph.add_node("G")
-    my_graph.add_node("H")
-    my_graph.add_node("I")
+    my_directed_graph.add_node("A")
+    my_directed_graph.add_node("B")
+    my_directed_graph.add_node("C")
+    my_directed_graph.add_node("D")
+    my_directed_graph.add_node("E")
+    my_directed_graph.add_node("F")
+    my_directed_graph.add_node("G")
+    my_directed_graph.add_node("H")
+    my_directed_graph.add_node("I")
 
     # Add edges
-    my_graph.add_edge("A", "B")
-    my_graph.add_edge("B", "C")
-    my_graph.add_edge("B", "D")
-    my_graph.add_edge("B", "E")
-    my_graph.add_edge("B", "F")
-    my_graph.add_edge("F", "G")
-    my_graph.add_edge("G", "H")
-    my_graph.add_edge("G", "I")
+    my_directed_graph.add_edge("A", "B")
+    my_directed_graph.add_edge("B", "C")
+    my_directed_graph.add_edge("C", "B")
 
-    visited_nodes: Union[List, None] = my_graph.dfs_find_path("B", "H")
+    directed_has_cycles: bool = my_directed_graph.has_cycles("A")
+
+    # Create undirected graph
+    dfs_stack = Stack()
+    my_undirected_graph = UndirectedGraph(dfs_stack)
+
+    # Add nodes
+    my_undirected_graph.add_node("A")
+    my_undirected_graph.add_node("B")
+    my_undirected_graph.add_node("C")
+    my_undirected_graph.add_node("D")
+    my_undirected_graph.add_node("E")
+    my_undirected_graph.add_node("F")
+    my_undirected_graph.add_node("G")
+    my_undirected_graph.add_node("H")
+    my_undirected_graph.add_node("I")
+
+    # Add edges
+    my_undirected_graph.add_edge("A", "B")
+    my_undirected_graph.add_edge("B", "C")
+    my_undirected_graph.add_edge("C", "A")
+
+
+    undirected_has_cycles: bool = my_undirected_graph.has_cycles("A")
 
     test = 'test'
 
