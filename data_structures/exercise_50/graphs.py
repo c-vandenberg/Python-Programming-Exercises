@@ -2,15 +2,14 @@
 
 from collections import defaultdict
 from typing import Any, Union, List, Set, Dict, Tuple
-from data_structures.exercise_47.stacks import Stack
 
 
 class BaseGraph:
-    def __init__(self, dfs_stack: Stack):
-        self._dfs_stack = dfs_stack
+    def __init__(self):
         self._nodes = defaultdict(list)
         self._visited_nodes = set()
         self._traversal_order = []
+        self._has_path = False
 
     def add_node(self, node: Any):
         if node not in self._nodes:
@@ -32,33 +31,34 @@ class BaseGraph:
             raise ValueError(f'Node {missing_node} not present in Graph')
 
     """ Depth First Search (DFS) algorithm to traverse graph """
-    def _dfs(self, node: Any, end_node: Union[None, Any] = None, detect_cycle: bool = False):
+    def _dfs(self, node: Any, end_node: Union[None, Any] = None) -> None:
         self._visited_nodes.add(node)
         self._traversal_order.append(node)
 
         if node == end_node:
-            self._traversal_order.append(node)
-            return
+            self._has_path = True
 
         for neighbour in self._nodes[node]:
-            edge: tuple = list(neighbour.keys())[0]
-            neighbour_node = edge[1] if edge[0] == node else edge[0]
+            neighbour_node: tuple = list(neighbour.keys())[0]
             if neighbour_node not in self._visited_nodes:
                 self._dfs(neighbour_node, end_node)
 
-    """ Use DFS algorithm to find path between two nodes (N.B. will not necessarily be the shortest path"""
+    """ Use DFS algorithm to find path between two nodes (N.B. will not necessarily be the shortest path) """
     def find_path(self, start_node: Any, end_node: Union[None, Any] = None) -> Union[List, None]:
         self._validate_nodes(start_node, end_node)
+        path: Union[List, None] = None
         self._dfs(start_node, end_node)
 
-        path: Union[List, None] = self._traversal_order[:]
+        if self._has_path:
+            path = self._traversal_order[:]
+            self._has_path = False
+
         self._visited_nodes.clear()
         self._traversal_order.clear()
-        self._dfs_stack.clear_stack()
 
         return path
 
-    """ Return all connected components in graph (i.e. all nodes that have neighbours """
+    """ Return all connected components in graph (i.e. all nodes that have neighbours) """
     def connected_components(self) -> Set:
         for node in self._nodes:
             if self._has_traversable_neighbours(self._nodes[node]) and node not in self._visited_nodes:
@@ -67,7 +67,6 @@ class BaseGraph:
         connected_components: Set = set(self._visited_nodes)
         self._visited_nodes.clear()
         self._traversal_order.clear()
-        self._dfs_stack.clear_stack()
 
         return connected_components
 
@@ -124,6 +123,32 @@ class DirectedGraph(BaseGraph):
 
         recursion_stack[current_node] = False
         return False
+
+    def topological_sort(self) -> List:
+        # Mark all nodes as not visited
+        visited: Dict = {node: False for node in self._nodes}
+        stack: List = []
+
+        # Call recursive helper function to detect cycles in Graph
+        for node in visited:
+            # Only detect cycles if we haven't yet visited it
+            if not visited[node]:
+                self._topological_sort_util(node, visited, stack)
+
+        return stack
+
+    def _topological_sort_util(self, current_node: Any, visited: Dict[Any, bool], stack: List):
+        visited[current_node] = True
+
+        # Recursively visit all nodes along the branch from the current node
+        for neighbour_node_dict in self._nodes[current_node]:
+            neighbour_node_tuple: Tuple = list(neighbour_node_dict.items())[0]
+            neighbour_node: Any = neighbour_node_tuple[0]
+
+            if not visited[neighbour_node]:
+                self._topological_sort_util(neighbour_node, visited, stack)
+
+        stack.insert(0, current_node)
 
 
 class UndirectedGraph(BaseGraph):
