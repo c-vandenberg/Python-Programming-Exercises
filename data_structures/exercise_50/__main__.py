@@ -24,9 +24,10 @@ def main():
     # Add edges
     my_directed_graph.add_edge("A", "B")
     my_directed_graph.add_edge("B", "C")
-    my_directed_graph.add_edge("C", "B")
+    my_directed_graph.add_edge("E", "G")
+    my_directed_graph.add_edge("G", "A")
 
-    directed_has_cycles: bool = my_directed_graph.has_cycles("A")
+    directed_has_cycles: bool = my_directed_graph.is_cyclic()
 
     # Create undirected graph
     dfs_stack = Stack()
@@ -46,10 +47,11 @@ def main():
     # Add edges
     my_undirected_graph.add_edge("A", "B")
     my_undirected_graph.add_edge("B", "C")
-    my_undirected_graph.add_edge("C", "A")
+    my_undirected_graph.add_edge("C", "G")
+    my_undirected_graph.add_edge("G", "A")
 
 
-    undirected_has_cycles: bool = my_undirected_graph.has_cycles("A")
+    undirected_has_cycles: bool = my_undirected_graph.is_cyclic()
 
     test = 'test'
 
