@@ -22,14 +22,12 @@ def main():
     # Add edges
     my_directed_graph.add_edge("A", "B")
     my_directed_graph.add_edge("B", "C")
-    my_directed_graph.add_edge("E", "G")
+    my_directed_graph.add_edge("C", "G")
     my_directed_graph.add_edge("G", "A")
 
-
-
     directed_graph_connected_nodes: Set = my_directed_graph.connected_components()
-
     directed_has_cycles: bool = my_directed_graph.is_cyclic()
+    topological_sort: List = my_directed_graph.topological_sort()
 
     # Create undirected graph
     my_undirected_graph = UndirectedGraph()

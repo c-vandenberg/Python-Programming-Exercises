@@ -2,6 +2,7 @@
 
 from collections import defaultdict
 from typing import Any, Union, List, Set, Dict, Tuple
+from helpers.exception_helpers import CycleError
 
 
 class BaseGraph:
@@ -124,20 +125,25 @@ class DirectedGraph(BaseGraph):
         recursion_stack[current_node] = False
         return False
 
-    def topological_sort(self) -> List:
-        # Mark all nodes as not visited
+    def topological_sort(self) -> List[Any]:
+        # A cyclic graph cannot have valid topological sorting. Raise error if graph contains cycles
+        if self.is_cyclic():
+            raise CycleError('A cyclic graph cannot have valid topological sorting')
+
+        # Mark all nodes as not visited and initialise stack that will be used to store the topologically sorted nodes
         visited: Dict = {node: False for node in self._nodes}
         stack: List = []
 
-        # Call recursive helper function to detect cycles in Graph
+        # Call recursive helper function to store nodes in topological sorted list
         for node in visited:
-            # Only detect cycles if we haven't yet visited it
+            # Only call recursive helper function on nodes we haven't yet visited
             if not visited[node]:
                 self._topological_sort_util(node, visited, stack)
 
         return stack
 
     def _topological_sort_util(self, current_node: Any, visited: Dict[Any, bool], stack: List):
+        # Mark current node as visited
         visited[current_node] = True
 
         # Recursively visit all nodes along the branch from the current node
