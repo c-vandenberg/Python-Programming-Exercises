@@ -1,15 +1,16 @@
 #!/usr/bin/env python3
 
 from queue import Queue, LifoQueue, PriorityQueue
+from typing import Any
 
 
-class StringFifoQueue(Queue):
+class GenericFifoQueue(Queue):
     """Append element to back of queue"""
-    def enqueue(self, element_string: str):
-        self.put(element_string)
+    def enqueue(self, element: Any):
+        self.put(element)
 
     """Remove and return element at front of queue"""
-    def dequeue(self) -> str:
+    def dequeue(self) -> Any:
         return self.get()
 
     """Return True if the queue is empty, False otherwise"""
@@ -25,13 +26,13 @@ class StringFifoQueue(Queue):
         return self.qsize()
 
 
-class StringLifoQueue(LifoQueue):
+class GenericLifoQueue(LifoQueue):
     """Append element to back of queue"""
-    def enqueue(self, element_string: str):
-        self.put(element_string)
+    def enqueue(self, element: Any):
+        self.put(element)
 
     """Remove and return element at front of queue"""
-    def dequeue(self) -> str:
+    def dequeue(self) -> Any:
         return self.get()
 
     """Return True if the queue is empty, False otherwise"""
@@ -47,13 +48,13 @@ class StringLifoQueue(LifoQueue):
         return self.qsize()
 
 
-class StringPriorityQueue(PriorityQueue):
+class GenericPriorityQueue(PriorityQueue):
     """Append element to back of queue"""
-    def enqueue(self, element_string: tuple[int, str]):
-        self.put(element_string)
+    def enqueue(self, element: tuple[int, Any]):
+        self.put(element)
 
     """Remove and return element at front of queue"""
-    def dequeue(self) -> str:
+    def dequeue(self) -> Any:
         return self.get()
 
     """Return True if the queue is empty, False otherwise"""

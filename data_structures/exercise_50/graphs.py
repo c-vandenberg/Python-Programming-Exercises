@@ -1,12 +1,14 @@
 #!/usr/bin/env python3
 
+from data_structures.exercise_46.queues import GenericFifoQueue
 from collections import defaultdict
 from typing import Any, Union, List, Set, Dict, Tuple
 from helpers.exception_helpers import CycleError
 
 
 class BaseGraph:
-    def __init__(self):
+    def __init__(self, bfs_queue: GenericFifoQueue):
+        self._bfs_queue = bfs_queue
         self._nodes = defaultdict(list)
         self._visited_nodes = set()
         self._traversal_order = []
@@ -31,24 +33,66 @@ class BaseGraph:
 
             raise ValueError(f'Node {missing_node} not present in Graph')
 
-    """ Depth First Search (DFS) algorithm to traverse graph """
+    """ Depth-First Search (DFS) algorithm to traverse graph """
     def _dfs(self, node: Any, end_node: Union[None, Any] = None) -> None:
         self._visited_nodes.add(node)
         self._traversal_order.append(node)
 
         if node == end_node:
             self._has_path = True
+            return
 
         for neighbour in self._nodes[node]:
-            neighbour_node: tuple = list(neighbour.keys())[0]
+            neighbour_node: Any = list(neighbour.keys())[0]
             if neighbour_node not in self._visited_nodes:
                 self._dfs(neighbour_node, end_node)
+
+    """ Breadth-First Search (BFS) algorithm to traverse graph """
+    def _bfs(self, start_node: Any, end_node: Union[None, Any] = None) -> None:
+        if len(self._visited_nodes) != 0:
+            self._visited_nodes.clear()
+
+        if len(self._traversal_order) != 0:
+            self._traversal_order.clear()
+
+        self._bfs_queue.enqueue(start_node)
+        self._visited_nodes.add(start_node)
+        self._traversal_order.append(start_node)
+
+        while self._bfs_queue:
+            current_node = self._bfs_queue.dequeue()
+
+            if current_node == end_node:
+                self._has_path = True
+                return
+
+            for neighbour in self._nodes[current_node]:
+                neighbour_node: Any = list(neighbour.keys())[0]
+                if neighbour_node not in self._visited_nodes:
+                    self._bfs_queue.enqueue(neighbour_node)
+                    self._visited_nodes.add(neighbour_node)
+                    self._traversal_order.append(neighbour_node)
 
     """ Use DFS algorithm to find path between two nodes (N.B. will not necessarily be the shortest path) """
     def find_path(self, start_node: Any, end_node: Union[None, Any] = None) -> Union[List, None]:
         self._validate_nodes(start_node, end_node)
         path: Union[List, None] = None
         self._dfs(start_node, end_node)
+
+        if self._has_path:
+            path = self._traversal_order[:]
+            self._has_path = False
+
+        self._visited_nodes.clear()
+        self._traversal_order.clear()
+
+        return path
+
+    """ Use BFS algorithm to find the shortest find path between two nodes """
+    def find_shortest_path(self, start_node: Any, end_node: Union[None, Any] = None) -> Union[List, None]:
+        self._validate_nodes(start_node, end_node)
+        path: Union[List, None] = None
+        self._bfs(start_node, end_node)
 
         if self._has_path:
             path = self._traversal_order[:]

@@ -1,12 +1,14 @@
 #!/usr/bin/env python3
 
+from data_structures.exercise_46.queues import GenericFifoQueue
 from graphs import DirectedGraph, UndirectedGraph
 from typing import Union, List, Set
 
 
 def main():
     # Create directed graph
-    my_directed_graph = DirectedGraph()
+    directed_graph_queue: GenericFifoQueue = GenericFifoQueue()
+    my_directed_graph = DirectedGraph(directed_graph_queue)
 
     # Add nodes
     my_directed_graph.add_node("A")
@@ -22,15 +24,20 @@ def main():
     # Add edges
     my_directed_graph.add_edge("A", "B")
     my_directed_graph.add_edge("B", "C")
+    my_directed_graph.add_edge("B", "G")
     my_directed_graph.add_edge("C", "G")
     my_directed_graph.add_edge("G", "A")
 
     directed_graph_connected_nodes: Set = my_directed_graph.connected_components()
     directed_has_cycles: bool = my_directed_graph.is_cyclic()
-    topological_sort: List = my_directed_graph.topological_sort()
+
+    directed_graph_shortest_a_g_path: Union[List, None] = my_directed_graph.find_shortest_path(
+        "A", "G"
+    )
 
     # Create undirected graph
-    my_undirected_graph = UndirectedGraph()
+    undirected_graph_queue: GenericFifoQueue = GenericFifoQueue()
+    my_undirected_graph = UndirectedGraph(undirected_graph_queue)
 
     # Add nodes
     my_undirected_graph.add_node("A")
