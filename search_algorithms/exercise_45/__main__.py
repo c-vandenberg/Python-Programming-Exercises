@@ -2,7 +2,7 @@
 
 from helpers.string_helpers import NumericStringListHelper
 from helpers.time_helpers import StopWatch
-from a_star_search import InterpolationSearch
+from dijkstras_algorithm import InterpolationSearch
 
 
 def main():
