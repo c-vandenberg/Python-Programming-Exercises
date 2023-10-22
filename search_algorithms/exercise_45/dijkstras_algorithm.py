@@ -1,23 +1,19 @@
 #!/usr/bin/env python3
 
 from helpers.string_helpers import NumericStringListHelper
-from data_structures.exercise_50.graphs import DirectedGraph
-from data_structures.exercise_46.queues import GenericPriorityQueue
-from typing import List, Union
-import random
+from data_structures.exercise_50.graphs import BaseGraph
+from typing import List, Dict, Union, Any
 import heapq
 
 
-class DijkstrasAlgorithm:
+class DijkstraAlgorithm:
     def __init__(
             self,
             numerical_string_list_helper: NumericStringListHelper,
-            weighted_directed_graph: DirectedGraph,
-            priority_queue: GenericPriorityQueue
+            weighted_graph: BaseGraph
     ):
         self._numerical_string_list_helper = numerical_string_list_helper
-        self._weighted_directed_graph = weighted_directed_graph
-        self._priority_queue = priority_queue
+        self._weighted_graph = weighted_graph
 
     def _get_user_input(self) -> int:
         user_input: str = input('Please enter a single digit: ')
@@ -30,34 +26,43 @@ class DijkstrasAlgorithm:
 
         return int(user_input)
 
-    # Prints shortest paths from src to all other vertices
-    def priority_queue_dijkstra_shortest_path(self, start_node: Union[int, float]):
-        # Create a priority queue to store vertices that
-        # are being preprocessed
+    # Prints shortest paths from src to all other nodes
+    def priority_queue_dijkstra(self, start_node: Union[int, float]) -> Dict[Union[int, float], Union[int, float]]:
+        #  Initialise set to keep track of nodes that have been visited
+        visited_nodes: set = set()
+
+        # Initialise priority queue to store nodes that are being processed and push start node with distance of 0
         priority_queue_list: List = []
-        self._priority_queue.enqueue(priority_queue_list, ())
         heapq.heappush(priority_queue_list, (0, start_node))
 
-        # Create a vector for distances and initialize all
-        # distances as infinite (INF)
-        dist = [float('inf')] * self.V
-        dist[start_node] = 0
+        # Initialise node distances start node as 0 and infinite for all other nodes
+        graph_nodes: Dict[Union[int, float], List[Dict]] = self._weighted_graph.nodes
+        nodes_distances: Dict = {node: float('inf') for node in graph_nodes}
+        nodes_distances[start_node] = 0
 
-        while pq:
-            # The first vertex in pair is the minimum distance
-            # vertex, extract it from priority queue.
-            # vertex label is stored in second of pair
-            d, u = heapq.heappop(pq)
+        while priority_queue_list:
+            # Pop the node with the minimum distance from the priority queue and unpack both distance and node
+            distance: Union[int, float]
+            current_node: Union[int, float]
+            distance, current_node = heapq.heappop(priority_queue_list)
+            visited_nodes.add(current_node)
 
-            # 'i' is used to get all adjacent vertices of a
-            # vertex
-            for v, weight in self.adj[u]:
-                # If there is shorted path to v through u.
-                if dist[v] > dist[u] + weight:
-                    # Updating distance of v
-                    dist[v] = dist[u] + weight
-                    heapq.heappush(pq, (dist[v], v))
+            # Iterate over all edges for current node
+            for edge in graph_nodes.get(current_node):
+                neighbour_node: Any = list(edge.keys())[0]
+                weight: Union[int, float] = list(edge.values())[0]
 
-        # Print shortest distances stored in dist[]
-        for i in range(self.V):
-            print(f"{i} \t\t {dist[i]}")
+                # Ensure edge weight is non-negative
+                if weight < 0:
+                    raise ValueError("Dijkstra's Algorithm can only be used with graphs that have non-negative weights")
+
+                # Check if we have already visited neighbour_node
+                if neighbour_node not in visited_nodes:
+                    # Check if distance from current node to neighbour node is less than previously calculated shortest
+                    # path
+                    if nodes_distances[neighbour_node] > nodes_distances[current_node] + weight:
+                        # Updating distance of neighbour node and push neighbour node onto priority queue
+                        nodes_distances[neighbour_node] = nodes_distances[current_node] + weight
+                        heapq.heappush(priority_queue_list, (nodes_distances[neighbour_node], neighbour_node))
+
+        return nodes_distances

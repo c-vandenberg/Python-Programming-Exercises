@@ -26,6 +26,11 @@ class BaseGraph:
         # Add edge logic to be implemented in child class
         pass
 
+    """ Nodes getter """
+    @property
+    def nodes(self) -> Dict[Union[int, float], List[Dict]]:
+        return self._nodes
+
     """ Validate nodes passed to class methods """
     def _validate_nodes(self, start_node: Any, end_node: Union[None, Any] = None):
         if start_node not in self._nodes or (end_node not in self._nodes and end_node):
@@ -42,8 +47,8 @@ class BaseGraph:
             self._has_path = True
             return
 
-        for neighbour in self._nodes[node]:
-            neighbour_node: Any = list(neighbour.keys())[0]
+        for edge in self._nodes[node]:
+            neighbour_node: Any = list(edge.keys())[0]
             if neighbour_node not in self._visited_nodes:
                 self._dfs(neighbour_node, end_node)
 
@@ -66,8 +71,8 @@ class BaseGraph:
                 self._has_path = True
                 return
 
-            for neighbour in self._nodes[current_node]:
-                neighbour_node: Any = list(neighbour.keys())[0]
+            for edge in self._nodes[current_node]:
+                neighbour_node: Any = list(edge.keys())[0]
                 if neighbour_node not in self._visited_nodes:
                     self._bfs_queue.enqueue(neighbour_node)
                     self._visited_nodes.add(neighbour_node)
@@ -152,8 +157,8 @@ class DirectedGraph(BaseGraph):
         recursion_stack[current_node] = True
 
         # Recursively visit all nodes along the branch from the current node
-        for neighbour_node_dict in self._nodes[current_node]:
-            neighbour_node_tuple: Tuple = list(neighbour_node_dict.items())[0]
+        for edge in self._nodes[current_node]:
+            neighbour_node_tuple: Tuple = list(edge.items())[0]
             neighbour_node: Any = neighbour_node_tuple[0]
 
             # If the neighbouring node has not yet been visited, recursively visit its neighbouring nodes
@@ -191,8 +196,8 @@ class DirectedGraph(BaseGraph):
         visited[current_node] = True
 
         # Recursively visit all nodes along the branch from the current node
-        for neighbour_node_dict in self._nodes[current_node]:
-            neighbour_node_tuple: Tuple = list(neighbour_node_dict.items())[0]
+        for edge in self._nodes[current_node]:
+            neighbour_node_tuple: Tuple = list(edge.items())[0]
             neighbour_node: Any = neighbour_node_tuple[0]
 
             if not visited[neighbour_node]:
@@ -232,8 +237,8 @@ class UndirectedGraph(BaseGraph):
         visited[current_node] = True
 
         # Recursively visit all nodes along the branch from the current node
-        for neighbour_node_dict in self._nodes[current_node]:
-            neighbour_node_tuple: Tuple = list(neighbour_node_dict.items())[0]
+        for edge in self._nodes[current_node]:
+            neighbour_node_tuple: Tuple = list(edge.items())[0]
             neighbour_node: Any = neighbour_node_tuple[0]
 
             # If the neighbouring node has not yet been visited, recursively visit its neighbouring nodes
